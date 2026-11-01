@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHONEVAULT ZIMBABWE - iPhone Store</title>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a73e8',
+                        accent: '#27ae60',
+                        dark: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+         ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        
+        .features .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 0;
+        }
+        
+        .features .box-container .box {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: left;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            outline: 1px solid rgba(226, 232, 240, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features .box-container .box:hover {
+            outline: 2px solid #27ae60;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px -5px rgba(39, 174, 96, 0.15);
+        }
+        
+        .features .box-container .box .img-wrapper {
+            height: 16rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .features .box-container .box img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .features .box-container .box:hover img {
+            transform: scale(1.05);
+        }
+        
+        .color-radio {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        
+        .color-radio:checked {
+            outline-color: #27ae60;
+            transform: scale(1.1);
+        }
+        
+        .storage-btn {
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            color: #475569;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.6rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .storage-btn:hover {
+            border-color: #94a3b8;
+            background-color: #f1f5f9;
+        }
+        
+        .storage-btn.active {
+            background-color: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        /* Sidebar filter styling */
+        
+        .filter-group {
+            max-height: 22rem;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+        
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #334155;
+            padding: 0.375rem 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease;
+        }
+        
+        .filter-option:hover {
+            background-color: #f1f5f9;
+            color: #059669;
+        }
+        
+        .filter-option input:checked~span.filter-name {
+            font-weight: 600;
+            color: #059669;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 relative transform scale-95 transition-transform duration-300">
+            <button id="close-login" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Login to PHONEVAULT</h3>
+                <p class="text-xs text-slate-500 mt-1">Access your saved orders &amp; Apple Care profile</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('Logged in successfully!'); document.getElementById('login-modal').classList.add('opacity-0', 'pointer-events-none');" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" required placeholder="you@example.com" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-lg shadow-md transition text-sm">Login Now</button>
+                <div class="flex items-center justify-between text-xs text-slate-500 pt-1">
+                    <a href="#" class="hover:text-emerald-600 transition">Forget your password?</a>
+                    <a href="#" class="hover:text-emerald-600 transition">Create an account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header Section Starts -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Logo -->
+            <a href="#home" class="flex items-center gap-3 font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight hover:opacity-90 transition">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-md shadow-emerald-600/30">
+                    <i class="fas fa-mobile-alt text-xl"></i>
+                </div>
+                <span>PHONEVAULT<span class="text-emerald-600">ZIMBABWE</span></span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-medium text-slate-600 text-sm tracking-wide">
+                <a href="#home" class="hover:text-emerald-600 transition-colors py-1">Home</a>
+                <a href="#features" class="text-emerald-600 font-semibold border-b-2 border-emerald-600 py-1">Features</a>
+                <a href="#features" class="hover:text-emerald-600 transition-colors py-1">Products</a>
+                <a href="#categories" class="hover:text-emerald-600 transition-colors py-1">Categories</a>
+                <a href="#review" class="hover:text-emerald-600 transition-colors py-1">Review</a>
+                <a href="#blogs" class="hover:text-emerald-600 transition-colors py-1">Blogs</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <button id="search-btn" class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Search">
+                    <i class="fas fa-search text-lg"></i>
+                </button>
+
+                <button id="cart-btn" class="relative w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Shopping Cart">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+                </button>
+
+                <button id="login-btn" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg font-medium text-sm transition shadow-sm">
+                    <i class="fas fa-user"></i>
+                    <span class="hidden sm:inline">Account</span>
+                </button>
+
+                <button id="menu-btn" class="md:hidden w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3">
+            <a href="#home" class="block font-medium text-slate-700 hover:text-emerald-600">Home</a>
+            <a href="#features" class="block font-medium text-emerald-600">Features</a>
+            <a href="#features" class="block font-medium text-slate-700 hover:text-emerald-600">Products</a>
+            <a href="#categories" class="block font-medium text-slate-700 hover:text-emerald-600">Categories</a>
+            <a href="#review" class="block font-medium text-slate-700 hover:text-emerald-600">Review</a>
+            <a href="#blogs" class="block font-medium text-slate-700 hover:text-emerald-600">Blogs</a>
+        </div>
+
+        <!-- Expandable Search Bar -->
+        <div id="search-bar" class="hidden bg-slate-100 border-b border-slate-200 py-3 px-4 sm:px-8 transition-all">
+            <div class="max-w-3xl mx-auto relative flex items-center">
+                <input type="search" id="search-box" placeholder="Search iPhone models, series, specs, colors..." class="w-full bg-white pl-11 pr-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                <i class="fas fa-search absolute left-4 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section Ends -->
+
+    <!-- Shopping Cart Slide-over Panel -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-emerald-600"></i> Your Cart Drawer
+            </h3>
+            <button id="close-cart" class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Dynamic Cart Items injected here -->
+        </div>
+
+        <div class="p-5 border-t border-slate-100 bg-slate-50 space-y-4">
+            <div class="flex justify-between items-center font-bold text-lg text-slate-900">
+                <span>Subtotal</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <p class="text-xs text-slate-500">Free priority shipping included within the USA.</p>
+            <button onclick="goToCheckout()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                <span>Proceed to Checkout</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Home Hero Section Starts -->
+        <section class="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-16 sm:py-24 px-6 overflow-hidden" id="home">
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#27ae60_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            <div class="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold uppercase tracking-widest">
+                    Authorized iPhone Retail Partner - ZIMBABWE
+                </span>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    Think Different. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">iPhone Lineup, Honest Price.</span>
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                    Brand new and latest Apple iPhone models with full ZIMBABWE warranty, ProMotion displays, custom storage tiers, and official color variants.
+                </p>
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <a href="#features" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-emerald-600/30 transition transform hover:-translate-y-0.5">
+                        Shop Now
+                    </a>
+                    <a href="#categories" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-3.5 rounded-xl font-semibold backdrop-blur transition">
+                        Browse Categories
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Home Hero Section Ends -->
+
+        <!-- iPhone Features Section Starts -->
+        <section class="features py-12" id="features">
+            <div class="max-w-7xl mx-auto">
+
+                <div class="flex flex-col md:flex-row md:items-end justify-between px-[5%] mb-6 pb-4 border-b border-slate-200 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">iPhone <span class="text-emerald-600">Collection</span></h2>
+                        <p class="text-slate-500 text-sm mt-1">Browse by series or price range &mdash; prices update live with storage tiers</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sort By:</label>
+                        <select id="sort-select" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="featured">Featured First</option>
+                            <option value="series">By Series</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-6 px-[5%] items-start">
+
+                    <!-- Sidebar Filters Starts -->
+                    <aside class="w-full lg:w-64 flex-shrink-0 bg-white rounded-2xl p-5 shadow-sm outline outline-1 outline-slate-200 lg:sticky lg:top-24">
+                        <h3 class="font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <i class="fas fa-filter text-emerald-600 text-sm"></i> Filters
+                        </h3>
+
+                        <!-- Search by Series -->
+                        <div class="mb-6">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Search by Series</label>
+                            <div id="series-filters" class="filter-group space-y-0.5">
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="all" checked class="accent-emerald-600">
+                                    <span class="filter-name">All Series</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="18 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 18</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="Air Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone Air</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="17 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 17</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="16 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 16</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="15 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 15</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="14 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 14</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="13 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 13</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="12 Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone 12</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="series" value="SE Series" class="accent-emerald-600">
+                                    <span class="filter-name">iPhone SE</span>
+                                    <span class="count-badge ml-auto text-[10px] font-semibold text-slate-400"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Search by Price -->
+                        <div class="mb-5">
+                            <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Search by Price</label>
+                            <div id="price-filters" class="space-y-0.5">
+                                <label class="filter-option">
+                                    <input type="radio" name="price" value="all" checked class="accent-emerald-600">
+                                    <span class="filter-name">Any Price</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="price" value="0-199" class="accent-emerald-600">
+                                    <span class="filter-name">Under $200</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="price" value="200-499" class="accent-emerald-600">
+                                    <span class="filter-name">$200 &ndash; $499</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="price" value="500-999" class="accent-emerald-600">
+                                    <span class="filter-name">$500 &ndash; $999</span>
+                                </label>
+                                <label class="filter-option">
+                                    <input type="radio" name="price" value="1000-99999" class="accent-emerald-600">
+                                    <span class="filter-name">$1,000 &amp; Above</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button id="clear-filters" class="w-full text-xs font-semibold text-emerald-600 border border-emerald-600 hover:bg-emerald-600 hover:text-white py-2 rounded-lg transition">
+                            <i class="fas fa-rotate-left mr-1"></i> Clear All Filters
+                        </button>
+
+                        <p class="text-[11px] text-slate-400 mt-3 leading-relaxed">
+                            Tip: price filters use the storage tier currently selected on each card.
+                        </p>
+                    </aside>
+                    <!-- Sidebar Filters Ends -->
+
+                    <!-- Product Grid Starts -->
+                    <div class="flex-1 min-w-0 w-full">
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-xs font-semibold text-slate-500">
+                                Showing <span id="result-count" class="text-emerald-600">0</span> of <span id="total-count">0</span> models
+                            </p>
+                            <p id="active-series-label" class="text-xs font-semibold text-slate-400">All Series</p>
+                        </div>
+
+                        <div class="box-container" id="product-grid">
+
+                            <!-- 1: iPhone 18 Pro -->
+                            <div class="box" data-name="iPhone 18 Pro" data-series="18 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">18 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone18-pro-1.jpg" alt="iPhone 18 Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+18+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 18 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$1,100</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A20 Pro (2nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.3" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 48MP Ultrawide + 48MP Periscope Telephoto (4x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="1100">256GB</button>
+                                        <button class="storage-btn" data-price="1250">512GB</button>
+                                        <button class="storage-btn" data-price="1400">1TB</button>
+                                        <button class="storage-btn" data-price="1500">2TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Deep Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip18p" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;" checked>
+                                        <input type="radio" name="color-ip18p" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip18p" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip18p" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 2: iPhone 18 Pro Max -->
+                            <div class="box" data-name="iPhone 18 Pro Max" data-series="18 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">18 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/pics/apple/apple-iphone18-pro-max-1.jpg" alt="iPhone 18 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+18+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 18 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$1,200</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A20 Pro (2nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.9" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 48MP Ultrawide + 48MP Periscope Telephoto (4x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="1200">256GB</button>
+                                        <button class="storage-btn" data-price="1350">512GB</button>
+                                        <button class="storage-btn" data-price="1500">1TB</button>
+                                        <button class="storage-btn" data-price="1700">2TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Deep Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip18pm" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;" checked>
+                                        <input type="radio" name="color-ip18pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip18pm" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip18pm" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 3: iPhone Duo (Foldable) -->
+                            <div class="box" data-name="iPhone Duo" data-series="18 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">18 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-duo.jpg" alt="iPhone Duo" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+Duo'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone Duo</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$1,199</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A20 Pro (2nm)</div>
+                                    <div class="block"><strong>Display:</strong> 7.6" Inner + 5.4" Outer 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 48MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="1199">256GB</button>
+                                        <button class="storage-btn" data-price="1349">512GB</button>
+                                        <button class="storage-btn" data-price="1549">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ipduo" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ipduo" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ipduo" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;">
+                                        <input type="radio" name="color-ipduo" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 4: iPhone Air -->
+                            <div class="box" data-name="iPhone Air" data-series="Air Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">Air Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-air.jpg" alt="iPhone Air" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+Air'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone Air</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$700</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A19 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.5" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="700">256GB</button>
+                                        <button class="storage-btn" data-price="760">512GB</button>
+                                        <button class="storage-btn" data-price="820">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Sky Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ipair" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;" checked>
+                                        <input type="radio" name="color-ipair" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ipair" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ipair" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 5: iPhone 17 -->
+                            <div class="box" data-name="iPhone 17" data-series="17 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">17 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg" alt="iPhone 17" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+17'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 17</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$650</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A19 (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.3" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 48MP Fusion Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="650">256GB</button>
+                                        <button class="storage-btn" data-price="700">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip17" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip17" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip17" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip17" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 6: iPhone 17e -->
+                            <div class="box" data-name="iPhone 17e" data-series="17 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">17 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17e.jpg" alt="iPhone 17e" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+17e'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 17e</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$480</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A19 (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" 60Hz Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="480">256GB</button>
+                                        <button class="storage-btn" data-price="530">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip17e" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip17e" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip17e" value="Purple" data-color-name="Purple" class="color-radio" style="background-color: #b0a7c3;">
+                                        <input type="radio" name="color-ip17e" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 6: iPhone 17 pro -->
+                            <div class="box" data-name="iPhone 17 pro" data-series="17 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">17 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17e.jpg" alt="iPhone 17e" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+17e'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 17 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$850</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A19 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.3" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 48MP Ultrawide + 48MP Periscope Telephoto (4x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="850">256GB</button>
+                                        <button class="storage-btn" data-price="920">512GB</button>
+                                        <button class="storage-btn" data-price="1000">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip17e" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip17e" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip17e" value="Purple" data-color-name="Purple" class="color-radio" style="background-color: #b0a7c3;">
+                                        <input type="radio" name="color-ip17e" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 6: iPhone 17 pro max -->
+                            <div class="box" data-name="iPhone 17 pro max" data-series="17 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">17 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17e.jpg" alt="iPhone 17e" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+17e'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 17 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$950</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A19 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.9" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 48MP Ultrawide + 48MP Periscope Telephoto (4x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="950">256GB</button>
+                                        <button class="storage-btn" data-price="1020">512GB</button>
+                                        <button class="storage-btn" data-price="1100">1TB</button>
+                                        <button class="storage-btn" data-price="1250">2TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip17e" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip17e" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip17e" value="Purple" data-color-name="Purple" class="color-radio" style="background-color: #b0a7c3;">
+                                        <input type="radio" name="color-ip17e" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+
+
+                            <!-- 7: iPhone 16 -->
+                            <div class="box" data-name="iPhone 16" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 16" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$400</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="400">128GB</button>
+                                        <button class="storage-btn" data-price="430">256GB</button>
+                                        <button class="storage-btn" data-price="470">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 16 e -->
+                            <div class="box" data-name="iPhone 16e" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 16e" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16e</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$320</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" 60Hz Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="320">128GB</button>
+                                        <button class="storage-btn" data-price="350">256GB</button>
+                                        <button class="storage-btn" data-price="390">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 16 plus -->
+                            <div class="box" data-name="iPhone 16 plus" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 16 plus" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16 Plus</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$430</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="430">128GB</button>
+                                        <button class="storage-btn" data-price="460">256GB</button>
+                                        <button class="storage-btn" data-price="500">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 16 pro -->
+                            <div class="box" data-name="iPhone 16 pro" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 16 pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$530</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.3" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 48MP Ultrawide + 12MP Periscope Telephoto (5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="530">128GB</button>
+                                        <button class="storage-btn" data-price="560">256GB</button>
+                                        <button class="storage-btn" data-price="600">512GB</button>
+                                        <button class="storage-btn" data-price="640">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 16 pro max -->
+                            <div class="box" data-name="iPhone 16 pro max" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 16 pro max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$620</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.9" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 48MP Ultrawide + 12MP Periscope Telephoto (5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="620">256GB</button>
+                                        <button class="storage-btn" data-price="660">512GB</button>
+                                        <button class="storage-btn" data-price="700">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 15 -->
+                            <div class="box" data-name="iPhone 15" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 15" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 15</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$320</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A16 Bionic (4nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="320">128GB</button>
+                                        <button class="storage-btn" data-price="350">256GB</button>
+                                        <button class="storage-btn" data-price="390">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 15 plus -->
+                            <div class="box" data-name="iPhone 15 plus" data-series="15 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 15 plus" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 15 Plus</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$350</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A16 Bionic (4nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="350">128GB</button>
+                                        <button class="storage-btn" data-price="380">256GB</button>
+                                        <button class="storage-btn" data-price="420">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 15 pro -->
+                            <div class="box" data-name="iPhone 16 pro" data-series="15 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 15 pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 15</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$430</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A16 Bionic (4nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="430">128GB</button>
+                                        <button class="storage-btn" data-price="460">256GB</button>
+                                        <button class="storage-btn" data-price="500">512GB</button>
+                                        <button class="storage-btn" data-price="540">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: iPhone 15 pro max -->
+                            <div class="box" data-name="iPhone 15 pro max" data-series="15 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="iPhone 16" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 15 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$500</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A17 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 12MP Ultrawide + 12MP Periscope Telephoto (5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="500">256GB</button>
+                                        <button class="storage-btn" data-price="540">512GB</button>
+                                        <button class="storage-btn" data-price="580">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ip16" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-ip16" value="Green" data-color-name="Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 8: iPhone 14 Plus -->
+                            <div class="box" data-name="iPhone 14 Plus" data-series="14 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">14 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-plus.jpg" alt="iPhone 14 Plus" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+14+Plus'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 14 Plus</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$240</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A15 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="240">128GB</button>
+                                        <button class="storage-btn" data-price="280">256GB</button>
+                                        <button class="storage-btn" data-price="320">512GB</button>
+
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Sky Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip14plus" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;" checked>
+                                        <input type="radio" name="color-ip14plus" value="Purple" data-color-name="Purple" class="color-radio" style="background-color: #b0a7c3;">
+                                        <input type="radio" name="color-ip14plus" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip14plus" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+
+                            <!-- 8: iPhone 14 -->
+                            <div class="box" data-name="iPhone 14 " data-series="14 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">14 Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-14-plus.jpg" alt="iPhone 14 Plus" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+14+Plus'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 14</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$230</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A15 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="230">128GB</button>
+                                        <button class="storage-btn" data-price="255">256GB</button>
+                                        <button class="storage-btn" data-price="285">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Sky Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip14plus" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;" checked>
+                                        <input type="radio" name="color-ip14plus" value="Purple" data-color-name="Purple" class="color-radio" style="background-color: #b0a7c3;">
+                                        <input type="radio" name="color-ip14plus" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip14plus" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+
+                            <!-- 11: iPhone 16 Pro -->
+                            <div class="box" data-name="iPhone 16 Pro" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://www.kenyatronics.com/product-images/php7xtMNG_800.jpg" alt="iPhone 16 Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$500</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.3" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 48MP Ultrawide + 12MP Periscope Telephoto (5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="500">128GB</button>
+                                        <button class="storage-btn" data-price="570">256GB</button>
+                                        <button class="storage-btn" data-price="690">512GB</button>
+                                        <button class="storage-btn" data-price="840">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Titanium Gray</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16p" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;" checked>
+                                        <input type="radio" name="color-ip16p" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip16p" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16p" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 12: iPhone 16 Pro Max -->
+                            <div class="box" data-name="iPhone 16 Pro Max" data-series="16 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">16 Series</span>
+                                    <img src="https://d1zbsdoqzan5lc.cloudfront.net/Screenshot%202024-09-23%20104931.png" alt="iPhone 16 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+16+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 16 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$600</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.9" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Fusion Main (OIS) + 48MP Ultrawide + 12MP Periscope Telephoto (5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="600">256GB</button>
+                                        <button class="storage-btn" data-price="720">512GB</button>
+                                        <button class="storage-btn" data-price="870">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Titanium Gray</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip16pm" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;" checked>
+                                        <input type="radio" name="color-ip16pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip16pm" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip16pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 13: iPhone 17 Pro Max -->
+                            <div class="box" data-name="iPhone 17 Pro Max" data-series="17 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">17 Series</span>
+                                    <img src="https://laptopclinic.co.ke/cdn/shop/files/iPhone-17-Pro-Max-b.webp?v=1770145461&width=800" alt="iPhone 17 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+17+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 17 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$802</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A19 Pro (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.9" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 48MP Ultrawide + 48MP Periscope Telephoto (4x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="802">256GB</button>
+                                        <button class="storage-btn" data-price="932">512GB</button>
+                                        <button class="storage-btn" data-price="1092">1TB</button>
+                                        <button class="storage-btn" data-price="1312">2TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Deep Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip17pm" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;" checked>
+                                        <input type="radio" name="color-ip17pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip17pm" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ip17pm" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 14: iPhone 14 Pro Max -->
+                            <div class="box" data-name="iPhone 14 Pro Max" data-series="14 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">14 Series</span>
+                                    <img src="https://dekatronics.co.ke/assets/images/products/apple-iphone-14-pro-max-128gb-e-sim-only-pre-owned-ex-us-default.jpg" alt="iPhone 14 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+14+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 14 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$380</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A16 Bionic (4nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 12MP Ultrawide + 12MP Telephoto (3x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="380">128GB</button>
+                                        <button class="storage-btn" data-price="410">256GB</button>
+                                        <button class="storage-btn" data-price="440">512GB</button>
+                                        <button class="storage-btn" data-price="470">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Dark Purple</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip14pm" value="Dark Purple" data-color-name="Dark Purple" class="color-radio" style="background-color: #5b4b8a;" checked>
+                                        <input type="radio" name="color-ip14pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip14pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip14pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 14: iPhone 14 Pro -->
+                            <div class="box" data-name="iPhone 14 Pro" data-series="14 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">14 Series</span>
+                                    <img src="https://dekatronics.co.ke/assets/images/products/apple-iphone-14-pro-max-128gb-e-sim-only-pre-owned-ex-us-default.jpg" alt="iPhone 14 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+14+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 14 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$320</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A16 Bionic (4nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" 120Hz LTPO Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 12MP Ultrawide + 12MP Telephoto (3x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="320">128GB</button>
+                                        <button class="storage-btn" data-price="350">256GB</button>
+                                        <button class="storage-btn" data-price="380">512GB</button>
+                                        <button class="storage-btn" data-price="410">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Dark Purple</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip14pm" value="Dark Purple" data-color-name="Dark Purple" class="color-radio" style="background-color: #5b4b8a;" checked>
+                                        <input type="radio" name="color-ip14pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip14pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip14pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 15: iPhone 12 Pro -->
+                            <div class="box" data-name="iPhone 12 Pro" data-series="12 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">12 Series</span>
+                                    <img src="https://www.phoneplacekenya.com/wp-content/uploads/2020/07/Apple-iPhone-12-Pro-b.jpg" alt="iPhone 12 Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+12+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 12 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$200</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A14 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (OIS) + 12MP Ultrawide + 12MP Telephoto (2x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="200">128GB</button>
+                                        <button class="storage-btn" data-price="220">256GB</button>
+                                        <button class="storage-btn" data-price="250">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Deep Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip12p" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;" checked>
+                                        <input type="radio" name="color-ip12p" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip12p" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-ip12p" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 16: iPhone 12 Pro Max -->
+                            <div class="box" data-name="iPhone 12 Pro Max" data-series="12 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">12 Series</span>
+                                    <img src="https://laptopclinic.co.ke/cdn/shop/files/iphone-12-pro-max-gold-1.webp?v=1742125511&width=1000" alt="iPhone 12 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+12+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 12 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$230</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A14 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (sensor-shift OIS) + 12MP Ultrawide + 12MP Telephoto (2.5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="230">128GB</button>
+                                        <button class="storage-btn" data-price="260">256GB</button>
+                                        <button class="storage-btn" data-price="290">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Gold</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip12pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;" checked>
+                                        <input type="radio" name="color-ip12pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-ip12pm" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;">
+                                        <input type="radio" name="color-ip12pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 16: iPhone 12 mini-->
+                            <div class="box" data-name="iPhone 12 mini" data-series="12 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">12 Series</span>
+                                    <img src="https://laptopclinic.co.ke/cdn/shop/files/iphone-12-pro-max-gold-1.webp?v=1742125511&width=1000" alt="iPhone 12 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+12+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 12 mini</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$150</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A14 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 5.4" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="150">64GB</button>
+                                        <button class="storage-btn" data-price="160">128GB</button>
+                                        <button class="storage-btn" data-price="180">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Gold</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip12pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;" checked>
+                                        <input type="radio" name="color-ip12pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-ip12pm" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;">
+                                        <input type="radio" name="color-ip12pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 16: iPhone 12 -->
+                            <div class="box" data-name="iPhone 12" data-series="12 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">12 Series</span>
+                                    <img src="https://laptopclinic.co.ke/cdn/shop/files/iphone-12-pro-max-gold-1.webp?v=1742125511&width=1000" alt="iPhone 12 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+12+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 12</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$150</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A14 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="150">64GB</button>
+                                        <button class="storage-btn" data-price="165">128GB</button>
+                                        <button class="storage-btn" data-price="180">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Gold</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip12pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;" checked>
+                                        <input type="radio" name="color-ip12pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-ip12pm" value="Deep Blue" data-color-name="Deep Blue" class="color-radio" style="background-color: #2c3e50;">
+                                        <input type="radio" name="color-ip12pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+
+                            <!-- 17: iPhone 13 Pro -->
+                            <div class="box" data-name="iPhone 13 Pro" data-series="13 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">13 Series</span>
+                                    <img src="https://www.priceinkenya.com/_ipx/b_%23ffffff,f_webp,q_75,fit_contain,s_300x300/pikapi/media/124676/conversions/iphone13prod-medium.webp" alt="iPhone 13 Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+13+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 13 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$270</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A15 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" 120Hz ProMotion Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (sensor-shift OIS) + 12MP Ultrawide + 12MP Telephoto (3x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="270">128GB</button>
+                                        <button class="storage-btn" data-price="300">256GB</button>
+                                        <button class="storage-btn" data-price="330">512GB</button>
+                                        <button class="storage-btn" data-price="360">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Sky Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip13p" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;" checked>
+                                        <input type="radio" name="color-ip13p" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-ip13p" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip13p" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 14: iPhone 13 -->
+                            <div class="box" data-name="iPhone 13" data-series="13 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">14 Series</span>
+                                    <img src="https://dekatronics.co.ke/assets/images/products/apple-iphone-14-pro-max-128gb-e-sim-only-pre-owned-ex-us-default.jpg" alt="iPhone 14 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+14+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 13</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$200</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A15 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.1" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (sensor-shift OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="200">128GB</button>
+                                        <button class="storage-btn" data-price="220">256GB</button>
+                                        <button class="storage-btn" data-price="250">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Dark Purple</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip14pm" value="Dark Purple" data-color-name="Dark Purple" class="color-radio" style="background-color: #5b4b8a;" checked>
+                                        <input type="radio" name="color-ip14pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip14pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip14pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 14: iPhone 13 mini -->
+                            <div class="box" data-name="iPhone 13 mini" data-series="13 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">14 Series</span>
+                                    <img src="https://dekatronics.co.ke/assets/images/products/apple-iphone-14-pro-max-128gb-e-sim-only-pre-owned-ex-us-default.jpg" alt="iPhone 14 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+14+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 13 mini</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$190</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A15 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 5.4" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (sensor-shift OIS) + 12MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="190">128GB</button>
+                                        <button class="storage-btn" data-price="215">256GB</button>
+                                        <button class="storage-btn" data-price="245">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Dark Purple</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip14pm" value="Dark Purple" data-color-name="Dark Purple" class="color-radio" style="background-color: #5b4b8a;" checked>
+                                        <input type="radio" name="color-ip14pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-ip14pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip14pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 18: iPhone 13 Pro Max -->
+                            <div class="box" data-name="iPhone 13 Pro Max" data-series="13 Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">13 Series</span>
+                                    <img src="https://www.phoneplacekenya.com/wp-content/uploads/2021/07/iPhone-13-Pro-Max-b.jpg" alt="iPhone 13 Pro Max" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+13+Pro+Max'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone 13 Pro Max</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$320</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A15 Bionic (5nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" 120Hz ProMotion Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 12MP Main (sensor-shift OIS) + 12MP Ultrawide + 12MP Telephoto (3x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="320">128GB</button>
+                                        <button class="storage-btn" data-price="350">256GB</button>
+                                        <button class="storage-btn" data-price="380">512GB</button>
+                                        <button class="storage-btn" data-price="410">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Sky Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ip13pm" value="Sky Blue" data-color-name="Sky Blue" class="color-radio" style="background-color: #a9c6e8;" checked>
+                                        <input type="radio" name="color-ip13pm" value="Silver" data-color-name="Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-ip13pm" value="Gold" data-color-name="Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ip13pm" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 19: iPhone SE (2026) -->
+                            <div class="box" data-name="iPhone SE" data-series="SE Series">
+                                <div class="img-wrapper relative">
+                                    <span class="absolute top-2 left-2 text-[10px] font-bold uppercase tracking-wider bg-slate-900/90 text-white px-2 py-1 rounded">SE Series</span>
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-se-2022.jpg" alt="iPhone SE 2026" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=iPhone+SE+2026'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">iPhone SE (2026)</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$120</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Apple A18 (3nm)</div>
+                                    <div class="block"><strong>Display:</strong> 6.06" Super Retina XDR OLED</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) Single Camera</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="120">64GB</button>
+                                        <button class="storage-btn" data-price="155">128GB</button>
+                                        <button class="storage-btn" data-price="215">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ipse" value="Black" data-color-name="Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ipse" value="White" data-color-name="White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-ipse" value="Rose Gold" data-color-name="Rose Gold" class="color-radio" style="background-color: #e0b0a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- No Results Message -->
+                        <div id="no-results" class="hidden text-center py-16 text-slate-400 bg-white rounded-2xl outline outline-1 outline-slate-200 mt-6">
+                            <i class="fas fa-box-open text-4xl mb-3 opacity-40 block"></i>
+                            <p class="font-semibold text-slate-500">No iPhones match your filters.</p>
+                            <p class="text-xs mt-1">Try a different series or widen the price range.</p>
+                        </div>
+                    </div>
+                    <!-- Product Grid Ends -->
+
+                </div>
+            </div>
+        </section>
+        <!-- iPhone Features Section Ends -->
+
+        <!-- Categories Section Starts -->
+        <section class="py-12 px-[5%] max-w-7xl mx-auto" id="categories">
+            <div class="mb-8 pb-4 border-b border-slate-200">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Product <span class="text-emerald-600">Category</span></h2>
+                <p class="text-slate-500 text-sm mt-1">Shop by brand - up to 25% off launch bundles</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-900 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-mobile-screen-button"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">SAMSUNG</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 15% off</p>
+                    <a href="./samsung.html" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-700 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">ONEPLUS</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 15% off</p>
+                    <a href="./Oneplus.html" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">IPHONE</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 15% off</p>
+                    <a href="#features" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-teal-600 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">GOOGLE PIXEL</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 25% off</p>
+                    <a href="./googlepixel.html" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+            </div>
+        </section>
+        <!-- Categories Section Ends -->
+
+        <!-- Review Section Starts -->
+        <section class="py-12 px-[5%] max-w-7xl mx-auto" id="review">
+            <div class="mb-8 pb-4 border-b border-slate-200">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Customer's <span class="text-emerald-600">Review</span></h2>
+                <p class="text-slate-500 text-sm mt-1">Verified buyers from across the ZIMBABWE</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold mb-4">JH</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">One of the best sites out there. Prices are extreme high but overall it has quality products, and the iPhone stock is always genuine.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">James Hunt</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold mb-4">LM</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">Product quality is good and my package was delivered earlier than expected. Sealed box and the official charger was included.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">Lucas Morris</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold mb-4">WW</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">I really love this site! The prices are reasonable, the products are great quality, and the overall shopping experience is smooth and convenient. Everything is well organized and I would definitely recommend it.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">Wyatt Whitney</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold mb-4">VR</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">This site is good on a first-come-first-serve basis. I grabbed the new iPhone flagship on launch day with zero hassle.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">Vance Rogers</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Review Section Ends -->
+
+        <!-- Blogs Section Starts -->
+        <section class="py-12 px-[5%] max-w-7xl mx-auto" id="blogs">
+            <div class="mb-8 pb-4 border-b border-slate-200">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Our <span class="text-emerald-600">Blogs</span></h2>
+                <p class="text-slate-500 text-sm mt-1">Buying guides, launch coverage and trade-in tips</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center overflow-hidden">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17-pro-max.jpg" alt="Everything You Need is Here" class="w-full h-full object-contain p-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8fafc/0f172a?text=Blog+1'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                            <span><i class="fas fa-user mr-1"></i> by User</span>
+                            <span><i class="fas fa-calendar mr-1"></i> 1st May, 2026</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Everything You Need is Here</h3>
+                        <p class="text-sm text-slate-600 mb-4">Why I prefer this site? Let me explain it in my blog - from warranty coverage to shipping speed.</p>
+                        <a href="#blogs" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                            read more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center overflow-hidden">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-17.jpg" alt="Latest Features Smartphone" class="w-full h-full object-contain p-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8fafc/0f172a?text=Blog+2'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                            <span><i class="fas fa-user mr-1"></i> by User</span>
+                            <span><i class="fas fa-calendar mr-1"></i> 1st May, 2026</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Latest Features Smartphone</h3>
+                        <p class="text-sm text-slate-600 mb-4">I am a tech-holic. This site provides the latest updates absolutely fast, straight from Apple's keynote events.</p>
+                        <a href="./Dio_Prank.html" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                            read more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center overflow-hidden">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg" alt="Latest And Best Products" class="w-full h-full object-contain p-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8fafc/0f172a?text=Blog+3'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                            <span><i class="fas fa-user mr-1"></i> by User</span>
+                            <span><i class="fas fa-calendar mr-1"></i> 1st May, 2026</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Latest And Best Products</h3>
+                        <p class="text-sm text-slate-600 mb-4">What do you want from a mobile website? Flagship iPhone smartphones, of course. Here's our top Apple picks this quarter.</p>
+                        <a href="./Dio_Prank.html" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                            read more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- Blogs Section Ends -->
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-16 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h4 class="text-white font-bold text-lg mb-3">PHONEVAULT ZIMBABWE <i class="fas fa-shopping-cart text-emerald-500 text-sm"></i></h4>
+                <p class="text-sm text-slate-400">Official trusted marketplace for flagship Apple iPhone smartphones, custom storage configurations, and official color variants. Thank you for exploring our website.</p>
+                <div class="flex justify-center sm:justify-start gap-3 mt-4">
+                    <a href="#" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-3">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#home" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>home</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>features</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>products</a></li>
+                    <li><a href="#categories" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>categories</a></li>
+                    <li><a href="#review" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>review</a></li>
+                    <li><a href="#blogs" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>blogs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-3">Newsletter</h4>
+                <p class="text-sm text-slate-400 mb-3">Subscribe for latest updates</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="your email" class="bg-slate-800 text-white text-sm px-3 py-2 rounded-lg border border-slate-700 focus:outline-none focus:border-emerald-500 w-full">
+                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">Subscribe</button>
+                </div>
+                <div class="flex items-center gap-3 mt-5 text-2xl text-slate-500">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-slate-800 text-xs text-center text-slate-500">
+            &copy; 2026 PHONEVAULT USA. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cart State (global so checkout handler can access it)
+            window.cart = [];
+            const cart = window.cart;
+
+            // DOM Elements
+            const cartBtn = document.getElementById('cart-btn');
+            const cartDrawer = document.getElementById('cart-drawer');
+            const cartOverlay = document.getElementById('cart-drawer-overlay');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalPriceEl = document.getElementById('cart-total-price');
+            const cartCountEl = document.getElementById('cart-count');
+
+            const loginBtn = document.getElementById('login-btn');
+            const loginModal = document.getElementById('login-modal');
+            const closeLoginBtn = document.getElementById('close-login');
+
+            const searchBtn = document.getElementById('search-btn');
+            const searchBar = document.getElementById('search-bar');
+            const searchBox = document.getElementById('search-box');
+
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            const productGrid = document.getElementById('product-grid');
+            const sortSelect = document.getElementById('sort-select');
+
+            const seriesInputs = document.querySelectorAll('#series-filters input');
+            const priceInputs = document.querySelectorAll('#price-filters input');
+            const clearFiltersBtn = document.getElementById('clear-filters');
+            const resultCountEl = document.getElementById('result-count');
+            const totalCountEl = document.getElementById('total-count');
+            const activeSeriesLabel = document.getElementById('active-series-label');
+            const noResultsEl = document.getElementById('no-results');
+
+            // Remember original (featured) order so we can restore it
+            productGrid.querySelectorAll('.box').forEach((box, i) => box.dataset.featuredOrder = i);
+
+            totalCountEl.innerText = productGrid.querySelectorAll('.box').length;
+
+            // Series display order (newest first)
+            const SERIES_ORDER = [
+                '18 Series', 'Air Series', '17 Series', '16 Series', '15 Series',
+                '14 Series', '13 Series', '12 Series', 'SE Series'
+            ];
+
+            // ---------- Combined Filter Engine (Search Text + Series + Price) ----------
+            function applyFilters() {
+                const query = searchBox.value.toLowerCase();
+                const seriesVal = document.querySelector('#series-filters input:checked').value;
+                const priceVal = document.querySelector('#price-filters input:checked').value;
+
+                let [min, max] = priceVal === 'all' ? [0, Infinity] : priceVal.split('-').map(Number);
+
+                let visibleCount = 0;
+                productGrid.querySelectorAll('.box').forEach(box => {
+                    const matchesText = box.innerText.toLowerCase().includes(query);
+                    const matchesSeries = seriesVal === 'all' || box.dataset.series === seriesVal;
+
+                    const currentPrice = parseFloat(box.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, '')) || 0;
+                    const matchesPrice = currentPrice >= min && currentPrice <= max;
+
+                    if (matchesText && matchesSeries && matchesPrice) {
+                        box.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        box.style.display = 'none';
+                    }
+                });
+
+                // Update result counter & active series label
+                resultCountEl.innerText = visibleCount;
+                activeSeriesLabel.innerText = seriesVal === 'all' ? 'All Series' : seriesVal;
+
+                // Show / hide no-results message
+                noResultsEl.classList.toggle('hidden', visibleCount > 0);
+            }
+
+            // ---------- Series Group Headers ----------
+            function injectSeriesHeaders() {
+                removeSeriesHeaders();
+                let lastSeries = null;
+                productGrid.querySelectorAll('.box').forEach(box => {
+                    if (box.style.display === 'none') return; // skip filtered-out boxes
+                    const series = box.dataset.series;
+                    if (series !== lastSeries) {
+                        const count = [...productGrid.querySelectorAll(`.box[data-series="${series}"]`)]
+                            .filter(b => b.style.display !== 'none').length;
+                        const header = document.createElement('div');
+                        header.className = 'series-header';
+                        header.innerHTML = `
+                            <span class="series-title">${series === 'Air Series' ? 'iPhone Air' : 'iPhone ' + series.replace(' Series', '')}</span>
+                            <span class="series-count">${count} model${count > 1 ? 's' : ''}</span>
+                            <span class="series-line"></span>
+                        `;
+                        productGrid.insertBefore(header, box);
+                        lastSeries = series;
+                    }
+                });
+            }
+
+            function removeSeriesHeaders() {
+                productGrid.querySelectorAll('.series-header').forEach(h => h.remove());
+            }
+
+            // ---------- Sort Handler ----------
+            sortSelect.addEventListener('change', (e) => {
+                const val = e.target.value;
+                const boxes = Array.from(productGrid.querySelectorAll('.box'));
+                const getPrice = (el) => parseFloat(el.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, ''));
+
+                if (val === 'price-low') {
+                    removeSeriesHeaders();
+                    boxes.sort((a, b) => getPrice(a) - getPrice(b));
+                } else if (val === 'price-high') {
+                    removeSeriesHeaders();
+                    boxes.sort((a, b) => getPrice(b) - getPrice(a));
+                } else if (val === 'name-asc') {
+                    removeSeriesHeaders();
+                    boxes.sort((a, b) => a.dataset.name.localeCompare(b.dataset.name));
+                } else if (val === 'series') {
+                    boxes.sort((a, b) => {
+                        const idxA = SERIES_ORDER.indexOf(a.dataset.series);
+                        const idxB = SERIES_ORDER.indexOf(b.dataset.series);
+                        if (idxA !== idxB) return idxA - idxB;
+                        return getPrice(a) - getPrice(b); // within series: cheap → expensive
+                    });
+                    boxes.forEach(box => productGrid.appendChild(box));
+                    injectSeriesHeaders();
+                } else {
+                    // Featured First — restore original order
+                    removeSeriesHeaders();
+                    boxes.sort((a, b) => parseInt(a.dataset.featuredOrder) - parseInt(b.dataset.featuredOrder));
+                }
+
+                boxes.forEach(box => productGrid.appendChild(box));
+                applyFilters();
+                if (val === 'series') injectSeriesHeaders(); // rebuild headers after filter re-applied
+            });
+
+            // ---------- Sidebar Filter Events ----------
+            searchBox.addEventListener('input', () => {
+                applyFilters();
+                if (sortSelect.value === 'series') injectSeriesHeaders();
+            });
+
+            seriesInputs.forEach(i => i.addEventListener('change', () => {
+                applyFilters();
+                if (sortSelect.value === 'series') injectSeriesHeaders();
+            }));
+
+            priceInputs.forEach(i => i.addEventListener('change', () => {
+                applyFilters();
+                if (sortSelect.value === 'series') injectSeriesHeaders();
+            }));
+
+            clearFiltersBtn.addEventListener('click', () => {
+                searchBox.value = '';
+                document.querySelector('#series-filters input[value="all"]').checked = true;
+                document.querySelector('#price-filters input[value="all"]').checked = true;
+                applyFilters();
+                if (sortSelect.value === 'series') injectSeriesHeaders();
+            });
+
+            // Populate series count badges
+            seriesInputs.forEach(input => {
+                const val = input.value;
+                const count = val === 'all' ?
+                    productGrid.querySelectorAll('.box').length :
+                    productGrid.querySelectorAll(`.box[data-series="${val}"]`).length;
+                const badge = input.closest('.filter-option').querySelector('.count-badge');
+                if (badge) badge.innerText = `(${count})`;
+            });
+
+            // Toggle Search Bar
+            searchBtn.addEventListener('click', () => {
+                searchBar.classList.toggle('hidden');
+                if (!searchBar.classList.contains('hidden')) {
+                    searchBox.focus();
+                }
+            });
+
+            // Toggle Mobile Menu
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Toggle Login Modal
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+            });
+            closeLoginBtn.addEventListener('click', () => {
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+            });
+
+            // Toggle Cart Drawer Overlay
+            function openCart() {
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeCart() {
+                cartDrawer.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            cartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+
+            // Setup Storage Selection & Dynamic Price Updates
+            document.querySelectorAll('.box').forEach(box => {
+                const storageBtns = box.querySelectorAll('.storage-btn');
+                const priceBadge = box.querySelector('.price-badge');
+
+                storageBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        storageBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const newPrice = parseInt(btn.dataset.price, 10);
+                        priceBadge.innerText = `$${newPrice.toLocaleString()}`;
+                        applyFilters();
+                        if (sortSelect.value === 'series') injectSeriesHeaders();
+                    });
+                });
+
+                // Color Radio Button Change Handler
+                const colorRadios = box.querySelectorAll('.color-radio');
+                const colorLabel = box.querySelector('.color-label');
+
+                colorRadios.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        if (radio.checked && colorLabel) {
+                            colorLabel.innerText = radio.dataset.colorName;
+                        }
+                    });
+                });
+            });
+
+            // Add to Cart Handlers
+            document.querySelectorAll('.add-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const box = e.target.closest('.box');
+                    const title = box.querySelector('h3').innerText;
+
+                    const activeStorageBtn = box.querySelector('.storage-btn.active');
+                    const storage = activeStorageBtn ? activeStorageBtn.innerText : '128GB';
+                    const price = parseFloat(box.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, ''));
+                    const imgSrc = box.querySelector('img').src;
+                    const checkedColorRadio = box.querySelector('.color-radio:checked');
+                    const selectedColor = checkedColorRadio ? checkedColorRadio.value : 'Black';
+
+                    addToCart(title, storage, price, imgSrc, selectedColor);
+                    showToast(`Added ${title} (${storage}, ${selectedColor}) to cart!`);
+                });
+            });
+
+            function addToCart(title, storage, price, img, color) {
+                const cartItemId = `${title}-${storage}-${color}`;
+                const existingIndex = cart.findIndex(item => item.id === cartItemId);
+
+                if (existingIndex > -1) {
+                    cart[existingIndex].qty += 1;
+                } else {
+                    cart.push({
+                        id: cartItemId,
+                        title: title,
+                        storage: storage,
+                        price: price,
+                        img: img,
+                        color: color,
+                        qty: 1
+                    });
+                }
+
+                updateCartUI();
+            }
+
+            function updateCartUI() {
+                const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+                cartCountEl.innerText = totalItems;
+
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fas fa-shopping-basket text-4xl mb-3 opacity-40"></i>
+                        <p>Your shopping cart is currently empty.</p>
+                    </div>
+                `;
+                } else {
+                    cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-100 relative">
+                        <img src="${item.img}" alt="${item.title}" class="w-16 h-16 object-contain bg-white rounded p-1 border border-slate-200">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-slate-800 text-sm truncate">${item.title}</h4>
+                            <span class="text-xs text-slate-500 block">${item.storage} • Color: ${item.color}</span>
+                            <span class="text-emerald-600 font-bold text-sm">$${item.price.toLocaleString()}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changeQty('${item.id.replace(/'/g, "\\'")}', -1)" class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-300">-</button>
+                            <span class="text-xs font-bold text-slate-800">${item.qty}</span>
+                            <button onclick="changeQty('${item.id.replace(/'/g, "\\'")}', 1)" class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-300">+</button>
+                        </div>
+                        <button onclick="removeFromCart('${item.id.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-red-500 ml-1 p-1 transition" title="Remove">
+                            <i class="fas fa-trash-alt text-xs"></i>
+                        </button>
+                    </div>
+                `).join('');
+                }
+
+                const totalVal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                cartTotalPriceEl.innerText = `$${totalVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            }
+
+            // Cart Quantity Management Helpers
+            window.changeQty = function(id, delta) {
+                const item = cart.find(i => i.id === id);
+                if (item) {
+                    item.qty += delta;
+                    if (item.qty <= 0) {
+                        removeFromCart(id);
+                    } else {
+                        updateCartUI();
+                    }
+                }
+            };
+
+            window.removeFromCart = function(id) {
+                const index = cart.findIndex(i => i.id === id);
+                if (index > -1) {
+                    cart.splice(index, 1);
+                    updateCartUI();
+                }
+            };
+
+            // Proceed to Checkout — saves cart & redirects to checkout.html
+            window.goToCheckout = function() {
+                if (cart.length === 0) {
+                    showToast('Your cart is empty! Add some items first.');
+                    return;
+                }
+                localStorage.setItem('checkoutCart', JSON.stringify(cart));
+                window.location.href = 'checkout.html';
+            };
+
+            // Notification Toast helper
+            function showToast(message) {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'bg-slate-900 text-white px-4 py-3 rounded-lg shadow-xl text-sm flex items-center gap-3 slide-in border border-slate-800';
+                toast.innerHTML = `<i class="fas fa-check-circle text-emerald-400"></i> <span>${message}</span>`;
+                toastContainer.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2500);
+            }
+
+            // Close drawers/modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeCart();
+                    loginModal.classList.add('opacity-0', 'pointer-events-none');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // Initial Cart Render & Initial Filter Pass
+            updateCartUI();
+            applyFilters();
+        });
+    </script>
+</body>
+
+</html>

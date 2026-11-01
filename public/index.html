@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHONEVAULT USA - Flagship Smartphone Marketplace</title>
+
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                        },
+                        dark: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        
+         ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Subtle grid pattern background */
+        
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(16, 185, 129, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+
+    <!-- Dynamic Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Header Section Starts -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-3 font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight hover:opacity-90 transition">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-700 to-emerald-500 flex items-center justify-center text-white shadow-md shadow-emerald-600/30">
+                    <i class="fas fa-mobile-alt text-xl"></i>
+                </div>
+                <span>PHONEVAULT <span class="text-emerald-600">USA</span></span>
+            </a>
+
+            <!-- Desktop Centered Navigation Links with Brand Dropdown -->
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-medium text-slate-600 text-sm tracking-wide">
+                <a href="#home" class="text-emerald-600 font-semibold border-b-2 border-emerald-600 py-1">Home</a>
+
+                <!-- CENTERED BRAND DROPDOWN MENU -->
+                <div class="relative group py-5">
+                    <button class="flex items-center gap-2 font-bold text-slate-800 hover:text-emerald-600 transition-colors py-1 focus:outline-none">
+                        <i class="fas fa-layer-group text-emerald-600"></i>
+                        <span>Select Smartphone Brand</span>
+                        <i class="fas fa-chevron-down text-xs text-slate-400 group-hover:rotate-180 transition-transform duration-200"></i>
+                    </button>
+                    <!-- Dropdown Content (Opening the 4 required HTML pages) -->
+                    <div class="absolute left-1/2 -translate-x-1/2 top-full w-60 bg-white rounded-2xl shadow-xl border border-slate-100 py-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 transform group-hover:translate-y-0 translate-y-2">
+                        <a href="iphone.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                            <div class="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center text-slate-900">
+                                <i class="fab fa-apple text-base"></i>
+                            </div>
+                            <span>Apple iPhone</span>
+                        </a>
+                        <a href="samsung.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                            <div class="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
+                                <i class="fas fa-gem text-xs"></i>
+                            </div>
+                            <span>Samsung Galaxy</span>
+                        </a>
+                        <a href="Oneplus.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                            <div class="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center text-red-600">
+                                <i class="fas fa-bolt text-xs"></i>
+                            </div>
+                            <span>OnePlus</span>
+                        </a>
+                        <a href="googlepixel.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+                                <i class="fab fa-google text-xs"></i>
+                            </div>
+                            <span>Google Pixel</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#features" class="hover:text-emerald-600 transition-colors py-1">Features</a>
+                <a href="#products" class="hover:text-emerald-600 transition-colors py-1">Products</a>
+                <a href="#review" class="hover:text-emerald-600 transition-colors py-1">Reviews</a>
+                <a href="#blogs" class="hover:text-emerald-600 transition-colors py-1">Blogs</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <button id="search-btn" class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Search Devices">
+                    <i class="fas fa-search text-base"></i>
+                </button>
+
+                <button id="cart-btn" class="relative w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Shopping Cart">
+                    <i class="fas fa-shopping-cart text-base"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm border-2 border-white">0</span>
+                </button>
+
+                <button id="menu-btn" class="md:hidden w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 animate-fadeIn">
+            <a href="#home" class="block font-semibold text-emerald-600">Home</a>
+
+            <div class="py-2 border-y border-slate-100 space-y-2">
+                <span class="block text-xs font-bold uppercase tracking-wider text-slate-400">Select Smartphone Brand</span>
+                <a href="iphone.html" class="flex items-center gap-3 font-semibold text-slate-700 hover:text-emerald-600 py-1 pl-2">
+                    <i class="fab fa-apple text-slate-900 w-4"></i> Apple iPhone
+                </a>
+                <a href="samsung.html" class="flex items-center gap-3 font-semibold text-slate-700 hover:text-emerald-600 py-1 pl-2">
+                    <i class="fas fa-gem text-blue-600 w-4"></i> Samsung Galaxy
+                </a>
+                <a href="oneplus.html" class="flex items-center gap-3 font-semibold text-slate-700 hover:text-emerald-600 py-1 pl-2">
+                    <i class="fas fa-bolt text-red-600 w-4"></i> OnePlus
+                </a>
+                <a href="googlepixel.html" class="flex items-center gap-3 font-semibold text-slate-700 hover:text-emerald-600 py-1 pl-2">
+                    <i class="fab fa-google text-emerald-600 w-4"></i> Google Pixel
+                </a>
+            </div>
+
+            <a href="#features" class="block font-semibold text-slate-700 hover:text-emerald-600">Features</a>
+            <a href="#products" class="block font-semibold text-slate-700 hover:text-emerald-600">Products</a>
+            <a href="#review" class="block font-semibold text-slate-700 hover:text-emerald-600">Reviews</a>
+            <a href="#blogs" class="block font-semibold text-slate-700 hover:text-emerald-600">Blogs</a>
+        </div>
+
+        <!-- Expandable Search Bar -->
+        <div id="search-bar" class="hidden bg-slate-100 border-b border-slate-200 py-3 px-4 sm:px-8">
+            <div class="max-w-3xl mx-auto relative flex items-center">
+                <input type="search" id="search-box" placeholder="Search iPhone 15, Galaxy S24, Pixel 8, OnePlus..." class="w-full bg-white pl-11 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm shadow-inner">
+                <i class="fas fa-search absolute left-4 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section Ends -->
+
+    <!-- Shopping Cart Slide-over Panel -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-emerald-600"></i> Shopping Cart Drawer
+            </h3>
+            <button id="close-cart" class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Dynamic Cart Items injected here -->
+        </div>
+
+        <div class="p-5 border-t border-slate-100 bg-slate-50 space-y-4">
+            <div class="flex justify-between items-center font-bold text-lg text-slate-900">
+                <span>Subtotal</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <p class="text-xs text-slate-500 flex items-center gap-1.5">
+                <i class="fas fa-truck text-emerald-600"></i> Free Express Shipping & 1-Year Warranty included.
+            </p>
+            <button onclick="goToCheckout()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2">
+                <span>Checkout Now</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- Home Hero Section Starts -->
+        <section class="relative bg-slate-900 text-white py-20 sm:py-28 px-6 overflow-hidden bg-grid-pattern" id="home">
+            <div class="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold uppercase tracking-widest backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> USA Official Smartphone Vault
+                </span>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-tight">
+                    Brand New & <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-200">Latest Flagship</span> Phones
+                </h1>
+
+                <p class="text-slate-300 text-base sm:text-xl max-w-2xl mx-auto leading-relaxed font-normal">
+                    Direct access to official carrier-unlocked devices with USA warranty. Choose your preferred brand to view current live inventory.
+                </p>
+
+                <!-- Quick Brand Pill Links -->
+                <div class="pt-6 flex flex-wrap justify-center gap-3 sm:gap-4">
+                    <a href="iphone.html" class="bg-white/10 hover:bg-emerald-600 text-white border border-white/20 px-6 py-3 rounded-full font-medium backdrop-blur transition flex items-center gap-2.5 text-sm hover:scale-105">
+                        <i class="fab fa-apple text-lg"></i> iPhone
+                    </a>
+                    <a href="samsung.html" class="bg-white/10 hover:bg-emerald-600 text-white border border-white/20 px-6 py-3 rounded-full font-medium backdrop-blur transition flex items-center gap-2.5 text-sm hover:scale-105">
+                        <i class="fas fa-gem text-sm text-blue-400"></i> Samsung
+                    </a>
+                    <a href="oneplus.html" class="bg-white/10 hover:bg-emerald-600 text-white border border-white/20 px-6 py-3 rounded-full font-medium backdrop-blur transition flex items-center gap-2.5 text-sm hover:scale-105">
+                        <i class="fas fa-bolt text-sm text-red-400"></i> OnePlus
+                    </a>
+                    <a href="googlepixel.html" class="bg-white/10 hover:bg-emerald-600 text-white border border-white/20 px-6 py-3 rounded-full font-medium backdrop-blur transition flex items-center gap-2.5 text-sm hover:scale-105">
+                        <i class="fab fa-google text-sm text-emerald-400"></i> Google Pixel
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Home Hero Section Ends -->
+
+        <!-- Featured Brand Selection Cards Grid -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="brands">
+            <div class="mb-10 text-center space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Select By <span class="text-emerald-600">Brand Store</span></h2>
+                <p class="text-slate-500 text-sm max-w-lg mx-auto">Click on any brand card to jump straight to its dedicated catalog page.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- iPhone Card -->
+                <a href="iphone.html" class="group bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center relative overflow-hidden">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-900 group-hover:bg-emerald-600 text-white flex items-center justify-center text-3xl mb-5 shadow-md transition duration-300">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 group-hover:text-emerald-600 transition">Apple iPhone</h3>
+                    <p class="text-xs text-slate-500 mt-2 mb-6 leading-relaxed">Shop iPhone 15 Pro, Pro Max, Plus & Titanium finishes</p>
+                    <span class="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                        Open Storefront <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+                <!-- Samsung Card -->
+                <a href="samsung.html" class="group bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center relative overflow-hidden">
+                    <div class="w-16 h-16 rounded-2xl bg-blue-50 group-hover:bg-emerald-600 text-blue-600 group-hover:text-white flex items-center justify-center text-2xl mb-5 shadow-sm transition duration-300">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 group-hover:text-emerald-600 transition">Samsung Galaxy</h3>
+                    <p class="text-xs text-slate-500 mt-2 mb-6 leading-relaxed">Discover Galaxy S24 Ultra, Z Fold & AI features</p>
+                    <span class="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                        Open Storefront <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+                <!-- OnePlus Card -->
+                <a href="oneplus.html" class="group bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center relative overflow-hidden">
+                    <div class="w-16 h-16 rounded-2xl bg-red-50 group-hover:bg-emerald-600 text-red-600 group-hover:text-white flex items-center justify-center text-2xl mb-5 shadow-sm transition duration-300">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 group-hover:text-emerald-600 transition">OnePlus</h3>
+                    <p class="text-xs text-slate-500 mt-2 mb-6 leading-relaxed">Experience OnePlus 12 speed & Hasselblad cameras</p>
+                    <span class="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                        Open Storefront <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+                <!-- Google Pixel Card -->
+                <a href="googlepixel.html" class="group bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center relative overflow-hidden">
+                    <div class="w-16 h-16 rounded-2xl bg-emerald-50 group-hover:bg-emerald-600 text-emerald-600 group-hover:text-white flex items-center justify-center text-2xl mb-5 shadow-sm transition duration-300">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-slate-900 group-hover:text-emerald-600 transition">Google Pixel</h3>
+                    <p class="text-xs text-slate-500 mt-2 mb-6 leading-relaxed">Pure Android Tensor G3 chips & computational photography</p>
+                    <span class="mt-auto inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">
+                        Open Storefront <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section Starts -->
+        <section class="py-16 bg-slate-100/70" id="features">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-10 text-center space-y-2">
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Our Key <span class="text-emerald-600">Guarantees</span></h2>
+                    <p class="text-slate-500 text-sm">Why USA tech enthusiasts choose PhoneVault</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-100/60 text-emerald-600 flex items-center justify-center text-2xl">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Latest & Futuristic</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                We stock only authentic, sealed flagship devices hot off the manufacturing line. Stay tech-savvy with cutting-edge innovations.
+                            </p>
+                        </div>
+                        <a href="#products" class="mt-6 inline-flex items-center gap-2 text-xs font-bold text-slate-900 hover:text-emerald-600 transition">
+                            Explore Specs <i class="fas fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-100/60 text-emerald-600 flex items-center justify-center text-2xl">
+                                <i class="fas fa-truck-fast"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Payment on Delivery</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Nationwide courier delivery across all 50 states with flexible pay-on-arrival options for ultimate peace of mind.
+                            </p>
+                        </div>
+                        <a href="#products" class="mt-6 inline-flex items-center gap-2 text-xs font-bold text-slate-900 hover:text-emerald-600 transition">
+                            Shipping Details <i class="fas fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/60 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+                        <div class="space-y-4">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-100/60 text-emerald-600 flex items-center justify-center text-2xl">
+                                <i class="fas fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900">Easy & Secure Payments</h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Certified payment encryption and seamless financing terms powered by top carrier partnerships and banking platforms.
+                            </p>
+                        </div>
+                        <a href="#products" class="mt-6 inline-flex items-center gap-2 text-xs font-bold text-slate-900 hover:text-emerald-600 transition">
+                            Payment Options <i class="fas fa-arrow-right text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Features Section Ends -->
+
+        <!-- Featured Flagship Products Section Starts -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="products">
+            <div class="mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-slate-200 pb-6">
+                <div>
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Featured <span class="text-emerald-600">Flagships</span></h2>
+                    <p class="text-slate-500 text-sm mt-1">Directly order available models with real-time cart update</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-slate-400">Filter:</span>
+                    <span class="text-xs bg-emerald-100 text-emerald-700 font-bold px-3 py-1.5 rounded-full">All Phones</span>
+                </div>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Product 1: iPhone 15 Pro Max -->
+                <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-56 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                            <span class="absolute top-3 left-3 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">iOS Flagship</span>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQInxwKNMV09RyYRm4hrJa2RTlPFt3sEkdxnwNn16xLWQlhQ7DQyxdDF__B&s=10" alt="iPhone 15 Pro Max" class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-slate-400 font-medium ml-1">(4.9)</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-1 group-hover:text-emerald-600 transition">iPhone 15 Pro Max</h3>
+                        <p class="text-xs text-slate-500 mb-3">256GB - Natural Titanium - Unlocked</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through block">$1,299</span>
+                            <span class="font-extrabold text-slate-900 text-lg">$1,199</span>
+                        </div>
+                        <button onclick="addToCart('iPhone 15 Pro Max', 1199, 'https://placehold.co/400x500/f1f5f9/0f172a?text=iPhone+15+Pro+Max')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition shadow-md shadow-emerald-600/20 flex items-center gap-1.5">
+                            <i class="fas fa-cart-plus text-xs"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2: Samsung Galaxy S24 Ultra -->
+                <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-56 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                            <span class="absolute top-3 left-3 bg-blue-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Galaxy AI</span>
+                            <img src="https://images.samsung.com/ph/smartphones/galaxy-s24-ultra/images/galaxy-s24-ultra-highlights-kv.jpg?imbypass=true" alt="Samsung Galaxy S24 Ultra" class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-slate-400 font-medium ml-1">(4.9)</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-1 group-hover:text-emerald-600 transition">Galaxy S24 Ultra</h3>
+                        <p class="text-xs text-slate-500 mb-3">512GB - Titanium Black - Built-in S-Pen</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through block">$1,419</span>
+                            <span class="font-extrabold text-slate-900 text-lg">$1,299</span>
+                        </div>
+                        <button onclick="addToCart('Galaxy S24 Ultra', 1299, 'https://placehold.co/400x500/f1f5f9/0f172a?text=Galaxy+S24+Ultra')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition shadow-md shadow-emerald-600/20 flex items-center gap-1.5">
+                            <i class="fas fa-cart-plus text-xs"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3: OnePlus 12 -->
+                <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-56 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                            <span class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">SuperVOOC</span>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4heE0JVp2MeyfFAhqtK0m0HVWKg_GJ0FlaQPlCWrg6ZLSzHrFVJizakg&s=10" alt="OnePlus 12" class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            <span class="text-slate-400 font-medium ml-1">(4.8)</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-1 group-hover:text-emerald-600 transition">OnePlus 12</h3>
+                        <p class="text-xs text-slate-500 mb-3">256GB - Silky Black - Snapdragon 8 Gen 3</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through block">$899</span>
+                            <span class="font-extrabold text-slate-900 text-lg">$799</span>
+                        </div>
+                        <button onclick="addToCart('OnePlus 12', 799, 'https://placehold.co/400x500/f1f5f9/0f172a?text=OnePlus+12')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition shadow-md shadow-emerald-600/20 flex items-center gap-1.5">
+                            <i class="fas fa-cart-plus text-xs"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4: Google Pixel 8 Pro -->
+                <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm hover:border-emerald-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-56 bg-slate-50 rounded-2xl flex items-center justify-center p-4 mb-4 relative overflow-hidden">
+                            <span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Tensor G3</span>
+                            <img src="https://stratanetworks.com/wp-content/uploads/2023/12/Google-8-Pro-Porcelain.png" alt="Google Pixel 8 Pro" class="max-h-full max-w-full object-contain group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="flex items-center gap-1 text-amber-400 text-xs mb-2">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            <span class="text-slate-400 font-medium ml-1">(4.9)</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-1 group-hover:text-emerald-600 transition">Google Pixel 8 Pro</h3>
+                        <p class="text-xs text-slate-500 mb-3">128GB - Bay Blue - Pure Android 14</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-slate-400 line-through block">$999</span>
+                            <span class="font-extrabold text-slate-900 text-lg">$849</span>
+                        </div>
+                        <button onclick="addToCart('Google Pixel 8 Pro', 849, 'https://placehold.co/400x500/f1f5f9/0f172a?text=Pixel+8+Pro')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition shadow-md shadow-emerald-600/20 flex items-center gap-1.5">
+                            <i class="fas fa-cart-plus text-xs"></i> Add
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <!-- Featured Flagship Products Section Ends -->
+
+        <!-- Reviews Section Starts -->
+        <section class="py-16 bg-slate-100/70" id="review">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-10 text-center space-y-2">
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Verified Buyer <span class="text-emerald-600">Reviews</span></h2>
+                    <p class="text-slate-500 text-sm">Real ratings from smartphone enthusiasts across North America</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-lg">
+                                LM
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">Lucas Morris</h3>
+                                <div class="flex gap-1 text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed italic">
+                            "Ordered my iPhone 15 Pro Max directly through PhoneVault. Package arrived sealed within 48 hours in Texas. Flawless transaction!"
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-lg">
+                                WW
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">Wyatt Whitney</h3>
+                                <div class="flex gap-1 text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed italic">
+                            "The direct link navigation to individual brand pages (like Samsung and OnePlus) made comparing specs and buying my Galaxy S24 Ultra so simple."
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-7 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-full bg-slate-800 text-white font-bold flex items-center justify-center text-lg">
+                                VR
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">Vance Rogers</h3>
+                                <div class="flex gap-1 text-amber-400 text-xs">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed italic">
+                            "Great prices and unlocked devices. The payment on delivery service was key for me. 10/10 recommend PhoneVault USA!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Reviews Section Ends -->
+
+        <!-- Blogs Section Starts -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="blogs">
+            <div class="mb-10 text-center space-y-2">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Smartphone Insights & <span class="text-emerald-600">Blogs</span></h2>
+                <p class="text-slate-500 text-sm">Guides, comparison tests, and hardware reviews</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:border-emerald-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                            <img src="https://placehold.co/600x400/f1f5f9/0f172a?text=Flagship+Buying+Guide" alt="Buying Guide" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-[11px] font-semibold text-slate-400 mb-2">
+                                <span><i class="fas fa-tag text-emerald-600 mr-1"></i> Guide</span>
+                                <span><i class="fas fa-calendar mr-1"></i> Oct 2026</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-2 group-hover:text-emerald-600 transition">How to Pick Your Next Smartphone</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Weighing iOS vs Android, battery capacities, and chipset specs in 2026 to make an informed upgrade.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="#blogs" class="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700">Read Article <i class="fas fa-arrow-right text-[10px]"></i></a>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:border-emerald-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                            <img src="https://placehold.co/600x400/f1f5f9/0f172a?text=Camera+Shootout" alt="Camera Shootout" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-[11px] font-semibold text-slate-400 mb-2">
+                                <span><i class="fas fa-camera text-emerald-600 mr-1"></i> Camera</span>
+                                <span><i class="fas fa-calendar mr-1"></i> Oct 2026</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-2 group-hover:text-emerald-600 transition">Pixel 8 Pro vs Galaxy S24 Ultra</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Low-light photography and zoom lens comparison between two computational giants.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="#blogs" class="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700">Read Article <i class="fas fa-arrow-right text-[10px]"></i></a>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:border-emerald-500 transition group flex flex-col justify-between">
+                    <div>
+                        <div class="h-48 bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                            <img src="https://placehold.co/600x400/f1f5f9/0f172a?text=Fast+Charging+Tech" alt="Charging Tech" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 text-[11px] font-semibold text-slate-400 mb-2">
+                                <span><i class="fas fa-bolt text-emerald-600 mr-1"></i> Battery</span>
+                                <span><i class="fas fa-calendar mr-1"></i> Oct 2026</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-2 group-hover:text-emerald-600 transition">The Truth About Battery Health</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Rapid charging vs battery longevity: key habits to prolong your flagship's lifetime.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="#blogs" class="inline-flex items-center gap-2 text-xs font-bold text-emerald-600 hover:text-emerald-700">Read Article <i class="fas fa-arrow-right text-[10px]"></i></a>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- Blogs Section Ends -->
+
+    </main>
+
+    <!-- Footer Section Starts -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+            <div class="space-y-4">
+                <a href="index.html" class="flex items-center gap-3 font-extrabold text-xl text-white">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white">
+                        <i class="fas fa-mobile-alt text-sm"></i>
+                    </div>
+                    <span>PHONEVAULT <span class="text-emerald-500">USA</span></span>
+                </a>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    USA's premier destination for unlocked flagship smartphones. Certified 100% genuine inventory with official manufacturer guarantees.
+                </p>
+                <div class="flex gap-3 text-slate-400 pt-2">
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition text-xs"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition text-xs"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition text-xs"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition text-xs"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Dedicated Brand Stores</h4>
+                <ul class="space-y-2.5 text-xs">
+                    <li><a href="iphone.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fab fa-apple w-4 text-center"></i> Apple iPhone Page</a></li>
+                    <li><a href="samsung.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fas fa-gem w-4 text-center text-blue-400"></i> Samsung Galaxy Page</a></li>
+                    <li><a href="oneplus.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fas fa-bolt w-4 text-center text-red-400"></i> OnePlus Page</a></li>
+                    <li><a href="googlepixel.html" class="hover:text-emerald-400 transition flex items-center gap-2"><i class="fab fa-google w-4 text-center text-emerald-400"></i> Google Pixel Page</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Customer Support</h4>
+                <ul class="space-y-2.5 text-xs">
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Order Tracking & Delivery</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Warranty & Trade-ins</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Return & Refund Policy</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition">Contact Support Team</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-4">Join Newsletter</h4>
+                <p class="text-xs text-slate-400 mb-3">Get real-time price drop alerts and device announcements.</p>
+                <form onsubmit="event.preventDefault(); showToast('Subscribed to PhoneVault Newsletter!');" class="space-y-2">
+                    <input type="email" required placeholder="Enter your email address" class="w-full bg-slate-800 text-white text-xs px-3.5 py-2.5 rounded-xl border border-slate-700 focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2.5 rounded-xl transition">Subscribe Now</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <p>&copy; 2026 PHONEVAULT USA. All rights reserved.</p>
+            <div class="flex items-center gap-4 text-slate-500 text-xl">
+                <i class="fab fa-cc-visa" title="Visa"></i>
+                <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                <i class="fab fa-cc-apple-pay" title="Apple Pay"></i>
+                <i class="fab fa-cc-paypal" title="PayPal"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Complete Interactive JavaScript Logic -->
+    <script>
+        // Shopping Cart State
+        let cart = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header Toggle Listeners
+            const searchBtn = document.getElementById('search-btn');
+            const searchBar = document.getElementById('search-bar');
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const cartBtn = document.getElementById('cart-btn');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartOverlay = document.getElementById('cart-drawer-overlay');
+
+            if (searchBtn && searchBar) {
+                searchBtn.addEventListener('click', () => {
+                    searchBar.classList.toggle('hidden');
+                });
+            }
+
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Cart Drawer Controls
+            if (cartBtn) cartBtn.addEventListener('click', () => toggleCart(true));
+            if (closeCartBtn) closeCartBtn.addEventListener('click', () => toggleCart(false));
+            if (cartOverlay) cartOverlay.addEventListener('click', () => toggleCart(false));
+
+            renderCart();
+        });
+
+        // Cart Drawer Toggle Function
+        function toggleCart(open) {
+            const cartDrawer = document.getElementById('cart-drawer');
+            const cartOverlay = document.getElementById('cart-drawer-overlay');
+
+            if (open) {
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                cartDrawer.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // Add Product to Cart
+        function addToCart(title, price, image) {
+            const existingItem = cart.find(item => item.title === title);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    title,
+                    price,
+                    image,
+                    quantity: 1
+                });
+            }
+            renderCart();
+            toggleCart(true);
+            showToast(`Added ${title} to your cart!`);
+        }
+
+        // Remove Product from Cart
+        function removeFromCart(title) {
+            cart = cart.filter(item => item.title !== title);
+            renderCart();
+            showToast('Item removed from cart.');
+        }
+
+        // Change Quantity
+        function updateQuantity(title, change) {
+            const item = cart.find(item => item.title === title);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(title);
+                } else {
+                    renderCart();
+                }
+            }
+        }
+
+        // Render Cart UI and calculate totals
+        function renderCart() {
+            const cartContainer = document.getElementById('cart-items');
+            const cartCountBadge = document.getElementById('cart-count');
+            const cartTotalPrice = document.getElementById('cart-total-price');
+
+            if (!cartContainer) return;
+
+            // Calculate total items and total cost
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartCountBadge.innerText = totalItems;
+            cartTotalPrice.innerText = `$${subtotal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
+                        <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-300 text-2xl">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <p class="font-bold text-slate-800 text-sm">Your Cart is Empty</p>
+                        <p class="text-xs text-slate-400">Add a flagship smartphone to get started!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            cartContainer.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-100">
+                    <img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-contain rounded-xl bg-white p-1">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-slate-900 text-xs truncate">${item.title}</h4>
+                        <span class="text-xs font-semibold text-emerald-600 block">$${item.price.toLocaleString()}</span>
+                        <div class="flex items-center gap-2 mt-2">
+                            <button onclick="updateQuantity('${item.title}', -1)" class="w-6 h-6 rounded-md bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center text-xs">-</button>
+                            <span class="text-xs font-bold text-slate-800">${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.title}', 1)" class="w-6 h-6 rounded-md bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 flex items-center justify-center text-xs">+</button>
+                        </div>
+                    </div>
+                    <button onclick="removeFromCart('${item.title}')" class="text-slate-400 hover:text-red-500 p-2 transition">
+                        <i class="fas fa-trash-alt text-xs"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Toast Notification System
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-2 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto';
+            toast.innerHTML = `<i class="fas fa-check-circle text-emerald-400"></i> ${message}`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Checkout Button Handler
+        function goToCheckout() {
+            if (cart.length === 0) {
+                showToast('Your cart is currently empty!');
+                return;
+            }
+            showToast('Redirecting to secure USA checkout gateway...');
+        }
+    </script>
+</body>
+
+</html>

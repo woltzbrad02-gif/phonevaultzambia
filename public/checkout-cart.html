@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHONEVAULT USA</title>
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/global.css" rel="stylesheet">
+    <link href="./css/checkout.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.icon">
+    <script src="./js/jquery-2.1.1.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <style>
+        /* ================= COMPACT RESPONSIVE HEADER ================= */
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px 4%;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            width: 100%;
+            min-height: 0;
+        }
+        
+        .header .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .header .navbar {
+            font-size: 1.3rem;
+            margin: 0;
+            top: 0;
+        }
+        
+        .header .navbar a {
+            margin: 0 6px;
+            text-decoration: none;
+        }
+        
+        .header .icons div {
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        
+        .header .icons span {
+            font-size: 1.2rem;
+        }
+        
+        .header .search-form,
+        .header .shopping-cart,
+        .header .login-form {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 4px 4%;
+            }
+            .header .navbar {
+                display: none;
+            }
+            .header .logo {
+                font-size: 1.3rem;
+            }
+            .header .icons div {
+                font-size: 1.4rem;
+            }
+            #checkout_page {
+                padding-top: 70px !important;
+            }
+        }
+        /* ================= CHECKOUT LAYOUT ALIGNMENT ================= */
+        
+        #checkout_page {
+            padding-top: 90px;
+            padding-bottom: 40px;
+        }
+        
+        .checkout_1>.col-sm-6 {
+            margin-bottom: 30px;
+        }
+        /* breadcrumb list alignment */
+        
+        .check_lm1 ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .check_lm1 ul li {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1.4rem;
+            color: #555;
+        }
+        
+        .check_lm1 ul li .fa,
+        .check_lm1 ul li .fa-chevron-right {
+            font-size: 1.1rem;
+            color: #bbb;
+        }
+        /* form section headings */
+        
+        .check_lm2 h4,
+        .check_lm3 h4,
+        .check_lm6 h4 {
+            margin: 0 0 12px;
+        }
+        /* checkbox rows */
+        
+        .check_lm3 h5.normal,
+        .check_lm5 h5.normal {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 4px 0 10px;
+            font-weight: normal;
+        }
+        
+        .check_1 {
+            margin: 0;
+            transform: scale(1.2);
+        }
+        
+        .space_left,
+        .space_right {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+        /* ================= BEAUTIFUL FORM INPUTS ================= */
+        
+        .form-control {
+            width: 100%;
+            height: 44px;
+            padding: 10px 14px;
+            font-size: 15px;
+            color: #333;
+            background-color: #fafafa;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: none;
+            transition: all 0.25s ease;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+        
+        .form-control::placeholder {
+            color: #aaa;
+        }
+        
+        .form-control:hover {
+            border-color: #c7c7c7;
+            background-color: #fff;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: rgb(215, 16, 16);
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(215, 16, 16, 0.12);
+        }
+        
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+        /* email validation state */
+        
+        .form-control.invalid {
+            border-color: rgb(215, 16, 16);
+            box-shadow: 0 0 0 3px rgba(215, 16, 16, 0.12);
+        }
+        /* ================= BEAUTIFUL BUTTONS ================= */
+        
+        .btn-beauty {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            line-height: 1.2;
+        }
+        /* gradient pay button */
+        
+        #pay-btn {
+            background: linear-gradient(135deg, rgb(235, 30, 30) 0%, rgb(190, 10, 10) 100%);
+            color: #fff;
+            box-shadow: 0 6px 16px rgba(215, 16, 16, 0.35);
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        #pay-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, rgb(220, 20, 20) 0%, rgb(165, 5, 5) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 9px 22px rgba(215, 16, 16, 0.4);
+            color: #fff;
+            text-decoration: none;
+        }
+        
+        #pay-btn:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(215, 16, 16, 0.3);
+        }
+        /* disabled pay button (until all inputs are done) */
+        
+        #pay-btn:disabled {
+            background: linear-gradient(135deg, #d98a8a 0%, #b56666 100%);
+            color: #f5e3e3;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        
+        #pay-btn .btn-fee {
+            display: block;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-top: 2px;
+            opacity: 0.95;
+        }
+        /* brand icons below the pay button text */
+        
+        #pay-btn .pay-icons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 2.6rem;
+            margin-top: 6px;
+        }
+        
+        #pay-btn .pay-icons .fab {
+            color: #fff;
+        }
+        /* outline "return to cart" button */
+        
+        .btn-outline {
+            background: transparent;
+            color: rgb(215, 16, 16);
+            border: 2px solid rgb(215, 16, 16);
+        }
+        
+        .btn-outline:hover {
+            background: rgb(215, 16, 16);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(215, 16, 16, 0.25);
+            text-decoration: none;
+        }
+        /* ================= PAYMENT SUMMARY LINE ABOVE BUTTON ================= */
+        
+        .pay-summary {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 4px 0 2px;
+            padding: 12px 16px;
+            background: #fff8f8;
+            border: 1.5px dashed rgba(215, 16, 16, 0.35);
+            border-radius: 10px;
+            font-size: 1.4rem;
+            color: #555;
+            text-align: center;
+        }
+        
+        .pay-summary .ps-fee {
+            color: rgb(215, 16, 16);
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+        
+        .pay-summary .ps-method {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .pay-summary .ps-method .fab {
+            font-size: 2rem;
+            color: #555;
+        }
+        
+        .pay-summary.pending {
+            border-style: solid;
+            border-color: #e5e5e5;
+            background: #fafafa;
+            color: #aaa;
+        }
+        /* ================= ACTION BUTTONS ROW ================= */
+        
+        .checkout_1l3 {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        
+        .checkout_1l3 hr {
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .checkout_1l3 .btn-outline {
+            flex: 0 0 auto;
+        }
+        
+        .checkout_1l3 #pay-btn {
+            flex: 0 1 auto;
+            min-width: 240px;
+        }
+        
+        @media (max-width: 480px) {
+            .checkout_1l3 {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .checkout_1l3 .btn-outline,
+            .checkout_1l3 #pay-btn {
+                width: 100%;
+            }
+        }
+        /* ================= ORDER SUMMARY ALIGNMENT ================= */
+        
+        .checkout_1r1i {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        
+        .checkout_1r1i>div:first-child {
+            flex: 1;
+        }
+        
+        .checkout_1r1i>div:last-child {
+            flex: 0 0 auto;
+            text-align: right;
+        }
+        
+        .checkout_1r1i h5,
+        .checkout_1r1i h4 {
+            margin: 0;
+        }
+        /* injected cart item rows */
+        
+        .checkout_1r {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .checkout_1r img.iw {
+            width: 90px;
+            border-radius: 10px;
+            display: block;
+        }
+        
+        .checkout_1r .item-info {
+            flex: 1;
+        }
+        
+        .checkout_1r .item-price {
+            text-align: right;
+            color: rgb(215, 16, 16);
+            font-size: 2rem;
+            margin: 0;
+        }
+        /* ================= FOOTER ================= */
+        
+        .footer .box-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .footer .share a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            margin-right: 8px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        
+        .footer .share a:hover {
+            background: rgb(215, 16, 16);
+            color: #fff;
+            border-color: rgb(215, 16, 16);
+        }
+        
+        .footer .credit {
+            text-align: center;
+            padding: 16px 0;
+        }
+        
+        .check_lm6 h4 i {
+            color: #333;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- header section starts (compact) -->
+    <header class="header">
+
+        <a href="./index.html" class="logo">
+            <img src="./photo_2026-10-07_11-34-48-removebg-preview.png" alt="MOBILE_HUB logo" style="height: 40px; vertical-align: middle;"> PHONEVAULT USA
+        </a>
+
+        <nav class="navbar">
+            <a href="./index.html">home</a>
+            <a href="./index.html#features">features</a>
+            <a href="./index.html#products">products</a>
+            <a href="./index.html#categories">categories</a>
+            <a href="./index.html#review">review</a>
+            <a href="./index.html#blogs">blogs</a>
+        </nav>
+
+        <div class="icons">
+            <div class="fas fa-shopping-cart" id="cart-btn">&nbsp;<span id="cart-count">0</span></div>
+        </div>
+
+        <!-- cart panel (filled by js/script.js from localStorage) -->
+        <div class="shopping-cart" id="shopping-cart">
+            <div class="total"> total : $0/- </div>
+            <a href="checkout.html" class="btn">checkout</a>
+        </div>
+
+        <form action="./checkout.php" method="post" class="login-form">
+            <h3>login now</h3>
+            <input type="email" name="user" id="user" placeholder="your email" class="box">
+            <input type="password" name="pass" id="pass" placeholder="your password" class="box">
+            <p>forget your password <a href="FormValidation.html">click here</a></p>
+            <p>don't have an account <a href="FormValidation.html">create now</a></p>
+            <button type="submit" name="submit" class="btn"> Login Now </button>
+        </form>
+
+    </header>
+    <!-- header section ends -->
+
+    <!-- checkout section starts -->
+    <section id="checkout_page" class="clearfix checkout">
+        <div class="container">
+            <div class="row">
+                <div class="checkout_1 clearfix">
+
+                    <!-- LEFT: customer info + payment -->
+                    <div class="col-sm-6">
+                        <div class="check_lm clearfix">
+                            <div class="check_lm1 clearfix">
+                                <ul class="mgt">
+                                    <li><a href="./index.html" style="text-decoration: none;">Cart</a> <i class="fa fa-chevron-right"></i></li>
+                                    <li>Information <i class="fa fa-chevron-right"></i></li>
+                                    <li>Delivery <i class="fa fa-chevron-right"></i></li>
+                                    <li>Payment</li>
+                                </ul>
+                            </div>
+
+                            <div class="check_lm2 clearfix">
+                                <h4>Contact information</h4>
+                            </div>
+
+                            <div class="check_lm3 clearfix">
+                                <input class="form-control" placeholder="Email" type="email" name="email" id="email">
+                                <h5 class="normal"><input class="check_1" type="checkbox"> <span>Keep me up to date on news and exclusive offers</span></h5>
+                                <h4>Delivey address</h4>
+                            </div>
+
+                            <div class="check_lm4 clearfix">
+                                <div class="col-sm-6 space_left">
+                                    <input class="form-control" placeholder="First Name" type="text" name="fname" id="fname">
+                                </div>
+                                <div class="col-sm-6 space_right">
+                                    <input class="form-control" placeholder="Last Name" type="text" name="lname" id="lname">
+                                </div>
+                            </div>
+
+                            <div class="check_lm4 clearfix">
+                                <input class="form-control" placeholder="House No" type="text" name="number" id="house-no">
+                                <input class="form-control" placeholder="Address" type="text" name="address" id="address">
+                                <input class="form-control" placeholder="Zip Code" type="text" name="Zip Code" id="house-no">
+                                <input class="form-control" placeholder="City" type="text" id="city">
+                                <input class="form-control" placeholder="State" type="text" id="State">
+
+                            </div>
+
+                            <div class="check_lm4 clearfix">
+                                <div class="col-sm-6 space_left">
+                                    <select class="form-control" name="subject" id="country">
+                                        <option value="">Country</option>
+                                        <option>USA</option>
+                                        <option>UK</option>
+                                        <option>Canada</option>
+                                        <option>Australia</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 space_right">
+                                    <input class="form-control" placeholder="Phone Number" type="tel" name="phone" id="phone">
+                                </div>
+                            </div>
+
+                            <div class="check_lm5 clearfix">
+                                <h5 class="normal"><input class="check_1" type="checkbox"> <span>Save this information for next time</span></h5>
+                            </div>
+
+                            <!-- PAYMENT: pay with card button -->
+                            <div class="check_lm6 clearfix" style="margin-top:30px;">
+                                <h4><i class="fas fa-credit-card"></i> Payment — Delivery Fee Only</h4>
+                                <p class="normal" style="font-size:1.4rem; color:#777; margin:0 0 10px;">
+                                    Pay only the <b>delivery fee</b> now ($20 for orders under $500, $35 for orders of $500 or more.). The full order amount is
+                                    <b>paid after delivery</b> (cash on delivery).
+                                </p>
+                            </div>
+
+                            <div class="checkout_1l3 clearfix">
+                                <hr>
+                                <!-- PAYMENT SUMMARY LINE (above the button) -->
+                                <div class="pay-summary pending" id="pay-summary">
+                                    <i class="fas fa-truck"></i>&nbsp;
+                                    <span id="pay-summary-text">Complete your details to see the delivery fee</span>
+                                </div>
+                                <a href="./index.html" class="btn-beauty btn-outline">Return to Cart</a>
+                                <button id="pay-btn" class="btn-beauty" type="button" onclick="goToCard()" disabled>
+                                    Pay with Visa / MasterCard
+                                    <span class="btn-fee" id="btn-fee"></span>
+                                    <span class="pay-icons">
+                                        <i class="fab fa-cc-visa"></i>
+                                        <i class="fab fa-cc-mastercard"></i>
+                                    </span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: order summary (items on top, then totals) -->
+                    <div class="col-sm-6">
+                        <div class="check_rm clearfix" id="order-summary">
+
+                            <!-- items get injected here (pictures, color, qty) -->
+
+                            <div class="checkout_1r1 clearfix">
+                                <div class="checkout_1r1i clearfix">
+                                    <div>
+                                        <h5 class="normal" style="font-size: 2.4rem; margin:0;">Order Total</h5>
+                                    </div>
+                                    <div>
+                                        <h4><span id="order-subtotal">$0/-</span></h4>
+                                    </div>
+                                </div>
+                                <div class="checkout_1r1i clearfix">
+                                    <div>
+                                        <h5 class="normal" style="font-size: 2.4rem; margin:0;">Delivery Fee</h5>
+                                    </div>
+                                    <div>
+                                        <h4>
+                                            <span class="col_3" id="order-delivery" style="color: rgb(215, 16, 16); font-size:2.4rem;">$0/-</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="checkout_1r1i clearfix">
+                                    <div>
+                                        <h5 class="normal" style="font-size: 2.4rem; margin:0;">Pay Now (Delivery Fee)</h5>
+                                    </div>
+                                    <div>
+                                        <h4>
+                                            <span class="col_3" id="order-paynow" style="color: rgb(215, 16, 16); font-size:2.6rem;">$0/-</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="checkout_1r1i clearfix">
+                                    <div>
+                                        <h5 class="normal" style="font-size: 3rem; margin:0;">Due After Delivery</h5>
+                                    </div>
+                                    <div>
+                                        <h4>
+                                            <span id="order-total" style="font-size:3rem;">$0/-</span>
+                                        </h4>
+                                    </div>
+                                </div>
+                                <hr>
+                                <p class="normal" style="font-size:1.4rem; color:#555;">
+                                    <i class="fas fa-truck"></i> Delivery fee is $20 for orders under $500 and $35 for orders of $500 or more. You pay only the delivery fee today. The full order amount is collected when your order is delivered.
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- checkout section ends -->
+
+    <!-- footer section starts -->
+    <section class="footer">
+        <div class="box-container">
+
+            <div class="box">
+                <h3> Namaste <i class="fas fa-shopping-cart"></i> </h3>
+                <p>thank you for exploring our webi.</p>
+                <div class="share">
+                    <a target="_blank" href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-linkedin"></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="./index.html" class="links"> <i class="fas fa-arrow-right"></i> home </a>
+                <a href="./index.html#features" class="links"> <i class="fas fa-arrow-right"></i> features </a>
+                <a href="./index.html#products" class="links"> <i class="fas fa-arrow-right"></i> products </a>
+                <a href="./index.html#categories" class="links"> <i class="fas fa-arrow-right"></i> categories </a>
+                <a href="./index.html#review" class="links"> <i class="fas fa-arrow-right"></i> review </a>
+                <a href="./index.html#blogs" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
+            </div>
+
+            <div class="box">
+                <h3>newsletter</h3>
+                <p>subscribe for latest updates</p>
+                <input type="email" placeholder="your email" class="email">
+                <input type="submit" value="subscribe" class="btn">
+                <img src="image/payment.png" class="payment-img" alt="">
+            </div>
+
+        </div>
+        <div class="credit"> <span> 2026 </span> | all rights reserved </div>
+    </section>
+    <!-- footer section ends -->
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        // =====================================================
+        //  CHECKOUT PAGE SCRIPT
+        //  - Items (picture, color, qty) on TOP of the summary
+        //  - Delivery fee: $35 if order total < $500, $50 if >= $500
+        //  - Full order amount is due AFTER delivery
+        //  - Pay button DISABLED until all inputs are completed
+        //  - Delivery fee is calculated and shown on the button
+        //  - Summary line above button: "Pay delivery fee of ... using ..."
+        //  - Complete + valid form -> button enables -> card.html
+        // =====================================================
+
+        // CHANGED: flat fees instead of percentage
+        const FEE_UNDER_500 = 20; // order total < $500
+        const FEE_500_OR_MORE = 35; // order total >= $500
+
+        const fmt = n => "$" + n.toLocaleString("en-US", {
+            minimumFractionDigits: 2
+        }) + "/-";
+
+        // CHANGED: fee calculation based on order total
+        function calcDeliveryFee(total) {
+            return total < 500 ? FEE_UNDER_500 : FEE_500_OR_MORE;
+        }
+
+        // ---------- CART RENDERING + TOTALS ----------
+        (function() {
+            let checkoutCart = [];
+            try {
+                checkoutCart = JSON.parse(localStorage.getItem("cart")) || [];
+                if (!Array.isArray(checkoutCart)) checkoutCart = [];
+            } catch (e) {
+                checkoutCart = [];
+            }
+
+            const summary = document.getElementById("order-summary");
+            const subtotalEl = document.getElementById("order-subtotal");
+            const deliveryEl = document.getElementById("order-delivery");
+            const payNowEl = document.getElementById("order-paynow");
+            const totalEl = document.getElementById("order-total");
+            const totalBox = summary.querySelector(".checkout_1r1");
+            let total = 0;
+
+            if (checkoutCart.length === 0) {
+                const empty = document.createElement("div");
+                empty.innerHTML = "<h3 style='padding:20px;'>Your cart is empty. <a href='./index.html'>Go shopping</a></h3>";
+                summary.insertBefore(empty, totalBox);
+            } else {
+                checkoutCart.forEach(item => {
+                    const lineTotal = item.price * item.qty;
+                    total += lineTotal;
+
+                    const row = document.createElement("div");
+                    row.className = "checkout_1r mgt";
+                    row.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" class="iw">
+                        <div class="item-info">
+                            <p class="mgt" style="margin:0;">${item.name}<br>
+                                <small>Color: ${item.color} &nbsp;|&nbsp; Qty: ${item.qty}</small>
+                            </p>
+                        </div>
+                        <h6 class="item-price mgt">
+                            $${lineTotal.toLocaleString("en-US", {minimumFractionDigits: 2})}/-
+                        </h6>`;
+                    summary.insertBefore(row, totalBox);
+                });
+            }
+
+            const deliveryFee = calcDeliveryFee(total); // CHANGED
+
+            subtotalEl.textContent = fmt(total);
+            deliveryEl.textContent = fmt(deliveryFee);
+            payNowEl.textContent = fmt(deliveryFee);
+            totalEl.textContent = fmt(total);
+
+            // expose fee for the button state logic
+            window.__deliveryFee = deliveryFee;
+        })();
+
+        // =====================================================
+        //  FORM COMPLETENESS -> PAY BUTTON + SUMMARY LINE STATE
+        // =====================================================
+
+        const REQUIRED_FIELDS = ["email", "fname", "lname", "address", "house-no", "city", "country", "phone"];
+        const payBtn = document.getElementById("pay-btn");
+        const btnFee = document.getElementById("btn-fee");
+        const paySummary = document.getElementById("pay-summary");
+        const paySummaryText = document.getElementById("pay-summary-text");
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+
+        const emailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+        const phoneValid = () => phoneInput.value.replace(/\D/g, "").length >= 7;
+
+        function checkoutHasItems() {
+            try {
+                const cart = JSON.parse(localStorage.getItem("cart")) || [];
+                return Array.isArray(cart) && cart.length > 0;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function refreshPayState() {
+            // email visual feedback
+            emailInput.classList.toggle("invalid",
+                emailInput.value.trim() !== "" && !emailValid());
+
+            const allFilled = REQUIRED_FIELDS.every(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim() !== "";
+            });
+
+            const fee = window.__deliveryFee || 0;
+            const formReady = allFilled && emailValid() && phoneValid();
+            const hasItems = checkoutHasItems();
+
+            // button enabled ONLY when form is complete AND fee has been calculated
+            payBtn.disabled = !(formReady && hasItems);
+
+            // ---- summary line above the button ----
+            if (!hasItems) {
+                paySummary.classList.add("pending");
+                paySummaryText.innerHTML = '<i class="fas fa-info-circle"></i> Your cart is empty — add items to pay the delivery fee';
+            } else if (!formReady) {
+                paySummary.classList.add("pending");
+                paySummaryText.textContent = "Complete your details to see the delivery fee";
+            } else {
+                paySummary.classList.remove("pending");
+                paySummaryText.innerHTML =
+                    `Pay delivery fee of <span class="ps-fee">${fmt(fee)}</span> using ` +
+                    `<span class="ps-method">Visa / MasterCard ` +
+                    `<i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i></span>`;
+            }
+
+            // ---- fee sub-line on the button ----
+            if (payBtn.disabled) {
+                const missing = REQUIRED_FIELDS.filter(id => document.getElementById(id).value.trim() === "").length;
+                btnFee.textContent = !hasItems ? "Cart is empty" :
+                    (missing > 0 ? "Complete all fields to pay" : `Fee: ${fmt(fee)}`);
+            } else {
+                btnFee.textContent = `Delivery fee to pay: ${fmt(fee)}`;
+            }
+        }
+
+        // re-check on every input/change in the form
+        REQUIRED_FIELDS.forEach(id => {
+            const el = document.getElementById(id);
+            el.addEventListener("input", refreshPayState);
+            el.addEventListener("change", refreshPayState);
+        });
+
+        // initial state on load
+        refreshPayState();
+
+        // =====================================================
+        //  REDIRECT (only reachable when the button is enabled)
+        // =====================================================
+
+        function goToCard() {
+            if (payBtn.disabled) return; // safety net
+            window.location.href = "card.html";
+        }
+    </script>
+    <script src="./js/script.js"></script>
+
+</body>
+
+</html>

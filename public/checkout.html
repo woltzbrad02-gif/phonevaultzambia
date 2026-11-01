@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PHONEVAULT ZIMBABWE - Checkout</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a73e8',
+                        accent: '#10b981',
+                        payred: '#dc2626'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.icon">
+
+    <style>
+        body {
+            background: radial-gradient(circle at top left, #f8fafc 0%, #edf2f7 100%);
+            min-height: 100vh;
+        }
+        
+        .field {
+            width: 100%;
+            height: 48px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #1e293b;
+            background-color: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            transition: all 0.2s ease-in-out;
+            box-sizing: border-box;
+        }
+        
+        .field::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+        }
+        
+        .field:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+        
+        .field:focus {
+            outline: none;
+            border-color: #1a73e8;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12);
+        }
+        
+        .field.invalid {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+        }
+        
+        select.field {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans text-slate-800 antialiased">
+
+    <!-- ================= HEADER ================= -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3.5">
+            <a href="./index.html" class="flex items-center gap-3 group">
+                <img src="./photo_2026-10-07_11-34-48-removebg-preview.png" alt="PHONEVAULT ZIMBABWE logo" class="h-10 transition-transform group-hover:scale-105" onerror="this.style.display='none'">
+                <span class="text-xl font-black tracking-tight text-slate-900">PHONEVAULT <span class="text-primary">ZIMBABWE</span></span>
+            </a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                <a href="./index.html" class="hover:text-primary transition-colors">Home</a>
+                <a href="./index.html#products" class="hover:text-primary transition-colors">Products</a>
+                <a href="./index.html#categories" class="hover:text-primary transition-colors">Categories</a>
+                <a href="./index.html#review" class="hover:text-primary transition-colors">Reviews</a>
+            </nav>
+            <a href="./index.html" class="flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-primary transition-colors bg-slate-100 px-3.5 py-2 rounded-lg hover:bg-primary/10">
+                <i class="fas fa-arrow-left text-xs"></i> Continue shopping
+            </a>
+        </div>
+    </header>
+
+    <!-- ================= CHECKOUT ================= -->
+    <main class="pt-28 pb-20 px-4">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- Breadcrumb / steps -->
+            <div class="fade-in flex flex-wrap items-center gap-2.5 text-xs font-medium text-slate-400 mb-8 uppercase tracking-wider">
+                <a href="./index.html" class="hover:text-primary transition-colors">Cart</a>
+                <i class="fas fa-chevron-right text-[9px]"></i>
+                <span class="text-primary font-bold">Information</span>
+                <i class="fas fa-chevron-right text-[9px]"></i>
+                <span>Delivery</span>
+                <i class="fas fa-chevron-right text-[9px]"></i>
+                <span>Payment</span>
+            </div>
+
+            <div class="fade-in mb-8">
+                <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
+                    Secure Checkout
+                </h1>
+                <p class="text-slate-500 font-medium text-base mt-1">
+                    Pay delivery fee now — balance collected upon delivery anywhere in Zimbabwe
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+
+                <!-- ============ LEFT: FORM ============ -->
+                <div class="lg:col-span-3 space-y-6 fade-in">
+
+                    <!-- Contact -->
+                    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
+                        <h2 class="flex items-center gap-3 text-lg font-bold text-slate-900 mb-5">
+                            <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-sm font-bold"><i class="fas fa-envelope"></i></span> Contact Information
+                        </h2>
+                        <input class="field" placeholder="Email Address (e.g. name@example.com)" type="email" name="email" id="email">
+                        <label class="flex items-center gap-3 text-sm text-slate-600 mt-3.5 cursor-pointer select-none">
+                            <input type="checkbox" class="accent-primary w-4 h-4 rounded">
+                            <span>Keep me updated on exclusive tech offers in Zimbabwe</span>
+                        </label>
+                    </section>
+
+                    <!-- Address -->
+                    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
+                        <h2 class="flex items-center gap-3 text-lg font-bold text-slate-900 mb-5">
+                            <span class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-sm font-bold"><i class="fas fa-truck-fast"></i></span> Delivery Address in Zimbabwe
+                        </h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <input class="field" placeholder="First Name" type="text" name="fname" id="fname">
+                            <input class="field" placeholder="Last Name" type="text" name="lname" id="lname">
+                            <input class="field sm:col-span-2" placeholder="House / Flat / Stand Number" type="text" id="house-no">
+                            <input class="field sm:col-span-2" placeholder="Street Name & Suburb (e.g. Avondale, Borrowdale)" type="text" name="address" id="address">
+                            <input class="field" placeholder="Postal / Area Code" type="text" id="zip">
+                            <input class="field" placeholder="City / Town (e.g. Harare, Bulawayo)" type="text" id="city">
+                            <input class="field" placeholder="Province / State" type="text" id="state" list="zw-provinces">
+                            <datalist id="zw-provinces">
+                                <option value="Harare">
+                                <option value="Bulawayo">
+                                <option value="Manicaland">
+                                <option value="Mashonaland Central">
+                                <option value="Mashonaland East">
+                                <option value="Mashonaland West">
+                                <option value="Masvingo">
+                                <option value="Matabeleland North">
+                                <option value="Matabeleland South">
+                                <option value="Midlands">
+                            </datalist>
+                            <div class="relative">
+                                <select class="field" name="subject" id="country">
+                                    <option value="">Select Country</option>
+                                    <option selected value="Zimbabwe">Zimbabwe</option>
+                                    <option>South Africa</option>
+                                    <option>Zambia</option>
+                                    <option>Botswana</option>
+                                    <option>Mozambique</option>
+                                    <option>Namibia</option>
+                                </select>
+                            </div>
+                            <input class="field sm:col-span-2" placeholder="Phone Number (e.g., +263 77 123 4567)" type="tel" name="phone" id="phone">
+                        </div>
+                        <label class="flex items-center gap-3 text-sm text-slate-600 mt-5 cursor-pointer select-none">
+                            <input type="checkbox" class="accent-primary w-4 h-4 rounded">
+                            <span>Save delivery details for future orders</span>
+                        </label>
+                    </section>
+
+                    <!-- Payment / COD -->
+                    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
+                        <h2 class="flex items-center gap-3 text-lg font-bold text-slate-900 mb-3">
+                            <span class="w-9 h-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-sm font-bold"><i class="fas fa-shield-halved"></i></span> Payment — Delivery Fee Only
+                        </h2>
+                        <p class="text-sm text-slate-500 leading-relaxed mb-5">
+                            To reserve your order, pay only the <strong class="text-slate-800">delivery fee</strong> online ($20 for orders under $500, $35 for orders $500 or higher). The full gadget balance is <strong class="text-slate-800">paid upon arrival (Cash on Delivery)</strong>.
+                        </p>
+
+                        <!-- summary line -->
+                        <div id="pay-summary" class="pending flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm text-slate-500 mb-5 transition-all">
+                            <i class="fas fa-truck text-slate-400"></i>
+                            <span id="pay-summary-text">Complete your delivery details to compute fee</span>
+                        </div>
+
+                        <!-- Payment Method Toggle Buttons with Larger Images -->
+                        <div class="mb-5">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">Select Payment Method</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <!-- Credit Card Button -->
+                                <button type="button" id="method-card-btn" onclick="setPaymentMethod('card')" class="flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-primary bg-primary/5 text-primary font-bold text-sm transition-all shadow-sm hover:shadow">
+                                    <div class="h-20 w-full bg-white rounded-xl border border-slate-200 overflow-hidden flex items-center justify-center p-1.5 mb-3 shadow-inner">
+                                        <img src="https://cdn.britannica.com/54/237654-050-9DD5E536/Macro-image-of-all-major-credit-card-companies.jpg" alt="Credit Cards" class="h-full w-full object-cover rounded-lg">
+                                    </div>
+                                    <span class="flex items-center gap-2"><i class="far fa-credit-card"></i> Credit / Debit Card</span>
+                                </button>
+                                <!-- EcoCash Button -->
+                                <button type="button" id="method-ecocash-btn" onclick="setPaymentMethod('ecocash')" class="flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-sm transition-all hover:border-slate-300 hover:shadow">
+                                    <div class="h-20 w-full bg-white rounded-xl border border-slate-200 overflow-hidden flex items-center justify-center p-1.5 mb-3 shadow-inner">
+                                        <img src="https://media.licdn.com/dms/image/v2/C4D12AQHEJJnpRtKF_Q/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1520169162145?e=2147483647&v=beta&t=ywvt6s-JDuLFyr_WNNew2_UaMyJPMsthE5OyMEmbKlU" alt="EcoCash / Mobile Money" class="h-full w-full object-cover rounded-lg">
+                                    </div>
+                                    <span class="flex items-center gap-2"><i class="fas fa-mobile-screen-button text-amber-500"></i> EcoCash / Mobile</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="./index.html" class="flex-1 inline-flex items-center justify-center gap-2 py-3.5 rounded-xl border-2 border-slate-200 text-slate-700 font-bold hover:border-primary hover:text-primary hover:bg-primary/5 transition-all text-sm">
+                                <i class="fas fa-arrow-left text-xs"></i> Back to Cart
+                            </a>
+                            <button id="pay-btn" type="button" onclick="handlePaymentRedirect()" disabled class="flex-[2] flex flex-col items-center justify-center py-3.5 px-6 rounded-xl text-white font-extrabold tracking-wide bg-gradient-to-r from-payred to-red-700 shadow-md shadow-red-500/20 transition-all disabled:from-slate-200 disabled:to-slate-300 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed enabled:hover:opacity-95 enabled:hover:shadow-lg enabled:active:scale-[0.99]">
+                                <span id="pay-btn-label" class="text-sm uppercase tracking-wider">Pay Delivery Fee with Card</span>
+                                <span id="btn-fee" class="text-xs font-normal opacity-90 mt-0.5"></span>
+                                <span id="pay-icons" class="flex items-center gap-3 text-xl mt-1.5 opacity-90">
+                                    <i class="fab fa-cc-visa"></i>
+                                    <i class="fab fa-cc-mastercard"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- ============ RIGHT: ORDER SUMMARY ============ -->
+                <div class="lg:col-span-2 fade-in lg:sticky lg:top-24">
+                    <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+                        <div class="bg-slate-900 text-white px-6 py-4 flex items-center gap-3">
+                            <i class="fas fa-box-open text-primary"></i>
+                            <h2 class="font-bold text-base">Order Summary</h2>
+                            <span id="badge-count" class="ml-auto text-xs bg-slate-800 text-slate-300 rounded-full px-3 py-1 font-bold border border-slate-700">0 items</span>
+                        </div>
+
+                        <div id="order-summary" class="px-6 py-4 max-h-[380px] overflow-y-auto divide-y divide-slate-100">
+                            <!-- injected cart items go here -->
+                        </div>
+
+                        <div class="px-6 pb-6 pt-3 border-t border-slate-100 space-y-3.5 text-sm bg-slate-50/50">
+                            <div class="flex justify-between text-slate-600">
+                                <span>Order Subtotal</span>
+                                <span id="order-subtotal" class="font-bold text-slate-900">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Zimbabwe Delivery Fee</span>
+                                <span id="order-delivery" class="font-bold text-payred">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Pay Now (Online Delivery Fee)</span>
+                                <span id="order-paynow" class="font-bold text-payred">$0.00</span>
+                            </div>
+                            <div class="flex justify-between items-center pt-3 border-t border-dashed border-slate-200">
+                                <span class="font-bold text-slate-900">Balance Due Upon Delivery</span>
+                                <span id="order-total" class="text-2xl font-black text-slate-900">$0.00</span>
+                            </div>
+
+                            <div class="mt-4 flex items-start gap-2.5 rounded-xl bg-emerald-50 border border-emerald-200/80 p-3.5 text-xs text-emerald-900 font-medium">
+                                <i class="fas fa-shield-halved text-emerald-600 text-sm mt-0.5"></i>
+                                <span>Doorstep Verification: Pay only the delivery fee today. The remaining order balance is inspected & paid upon delivery in Zimbabwe.</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm">
+            <div>
+                <h3 class="text-white font-black tracking-wider text-base mb-3">PHONEVAULT <span class="text-primary">ZIMBABWE</span></h3>
+                <p class="leading-relaxed text-slate-400">Your trusted source for premium smartphones and accessories across Harare, Bulawayo, and all Zimbabwe regions.</p>
+            </div>
+            <div>
+                <h3 class="text-white font-bold mb-3">Quick Navigation</h3>
+                <ul class="space-y-2 font-medium">
+                    <li><a href="./index.html" class="hover:text-white transition-colors">Home</a></li>
+                    <li><a href="./index.html#products" class="hover:text-white transition-colors">Products Catalog</a></li>
+                    <li><a href="./index.html#categories" class="hover:text-white transition-colors">Categories</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-bold mb-3">Connect With Us</h3>
+                <div class="flex gap-3">
+                    <a href="#" class="w-9 h-9 rounded-xl border border-slate-700 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-xl border border-slate-700 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-white transition-all"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-xl border border-slate-700 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-xl border border-slate-700 flex items-center justify-center hover:bg-primary hover:border-primary hover:text-white transition-all"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-slate-800/80 text-center py-5 text-xs text-slate-500 font-medium">
+            &copy; 2026 PHONEVAULT ZIMBABWE. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        // =====================================================
+        //  CHECKOUT PAGE SCRIPT
+        // =====================================================
+
+        const FEE_UNDER_500 = 20;
+        const FEE_500_OR_MORE = 35;
+        let selectedPaymentChannel = 'card'; // 'card' or 'ecocash'
+
+        const fmt = n => "$" + n.toLocaleString("en-US", {
+            minimumFractionDigits: 2
+        });
+
+        function calcDeliveryFee(total) {
+            return total < 500 ? FEE_UNDER_500 : FEE_500_OR_MORE;
+        }
+
+        function loadCheckoutCart() {
+            try {
+                let data = JSON.parse(localStorage.getItem("checkoutCart"));
+                if (!Array.isArray(data) || data.length === 0) {
+                    data = JSON.parse(localStorage.getItem("cart")); // legacy fallback
+                }
+                return Array.isArray(data) ? data : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // ---------- PAYMENT METHOD TOGGLE HANDLER ----------
+        function setPaymentMethod(method) {
+            selectedPaymentChannel = method;
+            const cardBtn = document.getElementById("method-card-btn");
+            const ecoBtn = document.getElementById("method-ecocash-btn");
+            const payBtnLabel = document.getElementById("pay-btn-label");
+            const payIcons = document.getElementById("pay-icons");
+
+            if (method === 'card') {
+                cardBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-primary bg-primary/5 text-primary font-bold text-sm transition-all shadow-sm hover:shadow";
+                ecoBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-sm transition-all hover:border-slate-300 hover:shadow";
+                payBtnLabel.textContent = "Pay Delivery Fee with Card";
+                payIcons.innerHTML = '<i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i>';
+            } else {
+                ecoBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-amber-500 bg-amber-50/50 text-amber-900 font-bold text-sm transition-all shadow-sm hover:shadow";
+                cardBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-sm transition-all hover:border-slate-300 hover:shadow";
+                payBtnLabel.textContent = "Pay Delivery Fee with EcoCash";
+                payIcons.innerHTML = '<i class="fas fa-mobile-screen-button text-base"></i><span class="text-xs font-bold tracking-tight">EcoCash / OneMoney</span>';
+            }
+        }
+
+        // ---------- CART RENDERING + TOTALS ----------
+        (function() {
+            const checkoutCart = loadCheckoutCart();
+            const summary = document.getElementById("order-summary");
+            const subtotalEl = document.getElementById("order-subtotal");
+            const deliveryEl = document.getElementById("order-delivery");
+            const payNowEl = document.getElementById("order-paynow");
+            const totalEl = document.getElementById("order-total");
+            const badgeEl = document.getElementById("badge-count");
+            let total = 0;
+            let totalQty = 0;
+
+            if (checkoutCart.length === 0) {
+                summary.innerHTML = `
+                    <div class="text-center py-10">
+                        <i class="fas fa-cart-shopping text-4xl text-slate-300 mb-3"></i>
+                        <p class="text-slate-500 font-semibold text-sm">Your shopping cart is empty.</p>
+                        <a href="./index.html"
+                           class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-xl bg-primary text-white text-xs font-bold hover:bg-blue-700 transition-all shadow-sm">
+                            <i class="fas fa-store"></i> Browse Catalog
+                        </a>
+                    </div>`;
+            } else {
+                checkoutCart.forEach(item => {
+                    const qty = Number((item && item.qty) || (item && item.quantity)) || 1;
+                    const price = Number((item && item.price) || (item && item.cost)) || 0;
+                    const lineTotal = price * qty;
+                    total += lineTotal;
+                    totalQty += qty;
+
+                    const img = item.image || item.img || item.picture || item.photo || item.url ||
+                        (item.product && item.product.image) || '';
+
+                    const name = item.name || item.title || item.productName ||
+                        (item.product && item.product.name) || 'Product';
+
+                    const row = document.createElement("div");
+                    row.className = "flex items-center gap-4 py-3 border-b border-slate-100 last:border-0";
+                    row.innerHTML = `
+                        <img src="${img}" alt="${name}"
+                             class="w-14 h-14 rounded-xl object-cover bg-slate-100 border border-slate-100 flex-shrink-0"
+                             onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22%3E%3Crect fill=%22%23f1f5f9%22 width=%2264%22 height=%2264%22/%3E%3Ctext x=%2232%22 y=%2238%22 font-size=%2210%22 text-anchor=%22middle%22 fill=%22%2394a3b8%22%3ENo image%3C/text%3E%3C/svg%3E'">
+                        <div class="flex-1 min-w-0">
+                            <p class="font-bold text-slate-800 text-xs truncate">${name}</p>
+                            <p class="text-[11px] text-slate-500 mt-0.5">
+                                ${item.color ? 'Color: ' + item.color + ' &nbsp;·&nbsp; ' : ''}Qty: ${qty}
+                            </p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-extrabold text-slate-900 text-xs">$${lineTotal.toLocaleString("en-US", { minimumFractionDigits: 2 })}</p>
+                            <p class="text-[10px] text-slate-400">$${price.toLocaleString("en-US", { minimumFractionDigits: 2 })} each</p>
+                        </div>`;
+                    summary.appendChild(row);
+                });
+            }
+
+            const deliveryFee = calcDeliveryFee(total);
+
+            subtotalEl.textContent = fmt(total);
+            deliveryEl.textContent = fmt(deliveryFee);
+            payNowEl.textContent = fmt(deliveryFee);
+            totalEl.textContent = fmt(total);
+            badgeEl.textContent = totalQty + (totalQty === 1 ? " item" : " items");
+
+            window.__deliveryFee = deliveryFee;
+            window.__orderTotal = total;
+        })();
+
+        // ---------- FORM VALIDATION -> PAY BUTTON STATE ----------
+        const REQUIRED_FIELDS = ["email", "fname", "lname", "address", "house-no", "city", "country", "phone"];
+        const payBtn = document.getElementById("pay-btn");
+        const btnFee = document.getElementById("btn-fee");
+        const paySummary = document.getElementById("pay-summary");
+        const paySummaryText = document.getElementById("pay-summary-text");
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+
+        const emailValid = () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+        const phoneValid = () => phoneInput.value.replace(/\D/g, "").length >= 7;
+
+        function refreshPayState() {
+            emailInput.classList.toggle("invalid",
+                emailInput.value.trim() !== "" && !emailValid());
+
+            const allFilled = REQUIRED_FIELDS.every(id => {
+                const el = document.getElementById(id);
+                return el && el.value.trim() !== "";
+            });
+
+            const fee = window.__deliveryFee || 0;
+            const formReady = allFilled && emailValid() && phoneValid();
+            const hasItems = loadCheckoutCart().length > 0;
+
+            payBtn.disabled = !(formReady && hasItems);
+
+            if (!hasItems) {
+                paySummary.className = "pending flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm text-slate-400 mb-5 transition-all";
+                paySummaryText.innerHTML = '<i class="fas fa-info-circle"></i> Your cart is empty — add items to pay the delivery fee';
+            } else if (!formReady) {
+                paySummary.className = "pending flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm text-slate-400 mb-5 transition-all";
+                paySummaryText.textContent = "Complete your delivery details to compute fee";
+            } else {
+                const methodLabel = selectedPaymentChannel === 'card' ? 'Visa / MasterCard' : 'EcoCash / Mobile Money';
+                paySummary.className = "flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-red-200 bg-red-50/70 px-4 py-3.5 text-sm text-slate-700 mb-5 transition-all";
+                paySummaryText.innerHTML =
+                    `Pay delivery fee of <span class="font-extrabold text-payred">${fmt(fee)}</span> using ` +
+                    `<span class="inline-flex items-center gap-1 font-semibold text-slate-800">${methodLabel}</span>`;
+            }
+
+            if (payBtn.disabled) {
+                const missing = REQUIRED_FIELDS.filter(id => {
+                    const el = document.getElementById(id);
+                    return !el || el.value.trim() === "";
+                }).length;
+                btnFee.textContent = !hasItems ? "Cart is empty" :
+                    (missing > 0 ? "Complete required details to enable" : `Delivery Fee: ${fmt(fee)}`);
+            } else {
+                btnFee.textContent = `Delivery fee to pay: ${fmt(fee)}`;
+            }
+        }
+
+        REQUIRED_FIELDS.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener("input", refreshPayState);
+                el.addEventListener("change", refreshPayState);
+            }
+        });
+
+        refreshPayState();
+
+        // ---------- CONDITIONAL REDIRECT BASED ON PAYMENT METHOD ----------
+        function handlePaymentRedirect() {
+            if (payBtn.disabled) return; // safety net
+            localStorage.setItem("selectedPaymentMethod", selectedPaymentChannel);
+
+            if (selectedPaymentChannel === 'ecocash') {
+                window.location.href = "login.html";
+            } else {
+                window.location.href = "card.html";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
