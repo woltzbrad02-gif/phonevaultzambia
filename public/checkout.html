@@ -35,7 +35,7 @@
             background: radial-gradient(circle at top left, #f8fafc 0%, #edf2f7 100%);
             min-height: 100vh;
         }
-        
+
         .field {
             width: 100%;
             height: 48px;
@@ -49,29 +49,29 @@
             transition: all 0.2s ease-in-out;
             box-sizing: border-box;
         }
-        
+
         .field::placeholder {
             color: #94a3b8;
             font-weight: 400;
         }
-        
+
         .field:hover {
             border-color: #cbd5e1;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
         }
-        
+
         .field:focus {
             outline: none;
             border-color: #1a73e8;
             background-color: #fff;
             box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.12);
         }
-        
+
         .field.invalid {
             border-color: #dc2626;
             box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
         }
-        
+
         select.field {
             appearance: none;
             -webkit-appearance: none;
@@ -80,11 +80,11 @@
             background-position: right 14px center;
             background-size: 16px;
         }
-        
+
         .fade-in {
             animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-        
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -139,7 +139,7 @@
                     Secure Checkout
                 </h1>
                 <p class="text-slate-500 font-medium text-base mt-1">
-                    Pay delivery fee now — balance collected upon delivery anywhere in Zimbabwe
+                    Pay a 10% deposit now — remaining balance in 12 easy monthly payments
                 </p>
             </div>
 
@@ -204,22 +204,22 @@
                         </label>
                     </section>
 
-                    <!-- Payment / COD -->
+                    <!-- Payment / Deposit -->
                     <section class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 sm:p-7">
                         <h2 class="flex items-center gap-3 text-lg font-bold text-slate-900 mb-3">
-                            <span class="w-9 h-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-sm font-bold"><i class="fas fa-shield-halved"></i></span> Payment — Delivery Fee Only
+                            <span class="w-9 h-9 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-sm font-bold"><i class="fas fa-shield-halved"></i></span> Payment — 10% Deposit Only
                         </h2>
                         <p class="text-sm text-slate-500 leading-relaxed mb-5">
-                            To reserve your order, pay only the <strong class="text-slate-800">delivery fee</strong> online ($20 for orders under $500, $35 for orders $500 or higher). The full gadget balance is <strong class="text-slate-800">paid upon arrival (Cash on Delivery)</strong>.
+                            To reserve your order, pay a <strong class="text-slate-800">10% deposit</strong> of your phone's price online today. The remaining balance is split into <strong class="text-slate-800">12 easy monthly payments</strong>.
                         </p>
 
                         <!-- summary line -->
                         <div id="pay-summary" class="pending flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm text-slate-500 mb-5 transition-all">
-                            <i class="fas fa-truck text-slate-400"></i>
-                            <span id="pay-summary-text">Complete your delivery details to compute fee</span>
+                            <i class="fas fa-mobile-screen text-slate-400"></i>
+                            <span id="pay-summary-text">Complete your delivery details to compute deposit</span>
                         </div>
 
-                        <!-- Payment Method Toggle Buttons with Larger Images -->
+                        <!-- Payment Method Toggle Buttons -->
                         <div class="mb-5">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">Select Payment Method</label>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -245,7 +245,7 @@
                                 <i class="fas fa-arrow-left text-xs"></i> Back to Cart
                             </a>
                             <button id="pay-btn" type="button" onclick="handlePaymentRedirect()" disabled class="flex-[2] flex flex-col items-center justify-center py-3.5 px-6 rounded-xl text-white font-extrabold tracking-wide bg-gradient-to-r from-payred to-red-700 shadow-md shadow-red-500/20 transition-all disabled:from-slate-200 disabled:to-slate-300 disabled:text-slate-400 disabled:shadow-none disabled:cursor-not-allowed enabled:hover:opacity-95 enabled:hover:shadow-lg enabled:active:scale-[0.99]">
-                                <span id="pay-btn-label" class="text-sm uppercase tracking-wider">Pay Delivery Fee with Card</span>
+                                <span id="pay-btn-label" class="text-sm uppercase tracking-wider">Pay 10% Deposit with Card</span>
                                 <span id="btn-fee" class="text-xs font-normal opacity-90 mt-0.5"></span>
                                 <span id="pay-icons" class="flex items-center gap-3 text-xl mt-1.5 opacity-90">
                                     <i class="fab fa-cc-visa"></i>
@@ -275,21 +275,25 @@
                                 <span id="order-subtotal" class="font-bold text-slate-900">$0.00</span>
                             </div>
                             <div class="flex justify-between text-slate-600">
-                                <span>Zimbabwe Delivery Fee</span>
-                                <span id="order-delivery" class="font-bold text-payred">$0.00</span>
+                                <span>Deposit Today (10%)</span>
+                                <span id="order-deposit" class="font-bold text-payred">$0.00</span>
                             </div>
                             <div class="flex justify-between text-slate-600">
-                                <span>Pay Now (Online Delivery Fee)</span>
+                                <span>Pay Now (Online Deposit)</span>
                                 <span id="order-paynow" class="font-bold text-payred">$0.00</span>
                             </div>
+                            <div class="flex justify-between text-slate-600">
+                                <span>Remaining Balance (12 × <span id="monthly-amt" class="font-bold text-slate-800">$0.00</span>/mo)</span>
+                                <span id="order-remaining" class="font-bold text-slate-700">$0.00</span>
+                            </div>
                             <div class="flex justify-between items-center pt-3 border-t border-dashed border-slate-200">
-                                <span class="font-bold text-slate-900">Balance Due Upon Delivery</span>
+                                <span class="font-bold text-slate-900">Total Phone Price</span>
                                 <span id="order-total" class="text-2xl font-black text-slate-900">$0.00</span>
                             </div>
 
                             <div class="mt-4 flex items-start gap-2.5 rounded-xl bg-emerald-50 border border-emerald-200/80 p-3.5 text-xs text-emerald-900 font-medium">
                                 <i class="fas fa-shield-halved text-emerald-600 text-sm mt-0.5"></i>
-                                <span>Doorstep Verification: Pay only the delivery fee today. The remaining order balance is inspected & paid upon delivery in Zimbabwe.</span>
+                                <span>Easy Payment Plan: Pay only a 10% deposit today to reserve your order. The balance is divided into 12 equal monthly payments — inspect your device on delivery.</span>
                             </div>
                         </div>
                     </section>
@@ -331,19 +335,20 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         // =====================================================
-        //  CHECKOUT PAGE SCRIPT
+        //  CHECKOUT PAGE SCRIPT — 10% Deposit + 12-Month Plan
         // =====================================================
 
-        const FEE_UNDER_500 = 20;
-        const FEE_500_OR_MORE = 35;
+        const DEPOSIT_RATE = 0.10;      // 10% deposit
+        const INSTALLMENT_MONTHS = 12;  // balance split into 12 months
+
         let selectedPaymentChannel = 'card'; // 'card' or 'ecocash'
 
         const fmt = n => "$" + n.toLocaleString("en-US", {
             minimumFractionDigits: 2
         });
 
-        function calcDeliveryFee(total) {
-            return total < 500 ? FEE_UNDER_500 : FEE_500_OR_MORE;
+        function calcDeposit(total) {
+            return total * DEPOSIT_RATE;
         }
 
         function loadCheckoutCart() {
@@ -369,14 +374,17 @@
             if (method === 'card') {
                 cardBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-primary bg-primary/5 text-primary font-bold text-sm transition-all shadow-sm hover:shadow";
                 ecoBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-sm transition-all hover:border-slate-300 hover:shadow";
-                payBtnLabel.textContent = "Pay Delivery Fee with Card";
+                payBtnLabel.textContent = "Pay 10% Deposit with Card";
                 payIcons.innerHTML = '<i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i>';
             } else {
                 ecoBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-amber-500 bg-amber-50/50 text-amber-900 font-bold text-sm transition-all shadow-sm hover:shadow";
                 cardBtn.className = "flex flex-col items-center justify-between p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 font-bold text-sm transition-all hover:border-slate-300 hover:shadow";
-                payBtnLabel.textContent = "Pay Delivery Fee with EcoCash";
+                payBtnLabel.textContent = "Pay 10% Deposit with EcoCash";
                 payIcons.innerHTML = '<i class="fas fa-mobile-screen-button text-base"></i><span class="text-xs font-bold tracking-tight">EcoCash / OneMoney</span>';
             }
+
+            // Re-render summary with correct method label
+            refreshPayState();
         }
 
         // ---------- CART RENDERING + TOTALS ----------
@@ -384,9 +392,11 @@
             const checkoutCart = loadCheckoutCart();
             const summary = document.getElementById("order-summary");
             const subtotalEl = document.getElementById("order-subtotal");
-            const deliveryEl = document.getElementById("order-delivery");
+            const depositEl = document.getElementById("order-deposit");
             const payNowEl = document.getElementById("order-paynow");
+            const remainingEl = document.getElementById("order-remaining");
             const totalEl = document.getElementById("order-total");
+            const monthlyEl = document.getElementById("monthly-amt");
             const badgeEl = document.getElementById("badge-count");
             let total = 0;
             let totalQty = 0;
@@ -435,15 +445,21 @@
                 });
             }
 
-            const deliveryFee = calcDeliveryFee(total);
+            const deposit = calcDeposit(total);
+            const remaining = total - deposit;
+            const monthly = remaining / INSTALLMENT_MONTHS;
 
             subtotalEl.textContent = fmt(total);
-            deliveryEl.textContent = fmt(deliveryFee);
-            payNowEl.textContent = fmt(deliveryFee);
+            depositEl.textContent = fmt(deposit);
+            payNowEl.textContent = fmt(deposit);
+            remainingEl.textContent = fmt(remaining);
+            monthlyEl.textContent = fmt(monthly);
             totalEl.textContent = fmt(total);
             badgeEl.textContent = totalQty + (totalQty === 1 ? " item" : " items");
 
-            window.__deliveryFee = deliveryFee;
+            window.__deposit = deposit;
+            window.__remaining = remaining;
+            window.__monthly = monthly;
             window.__orderTotal = total;
         })();
 
@@ -468,7 +484,8 @@
                 return el && el.value.trim() !== "";
             });
 
-            const fee = window.__deliveryFee || 0;
+            const deposit = window.__deposit || 0;
+            const monthly = window.__monthly || 0;
             const formReady = allFilled && emailValid() && phoneValid();
             const hasItems = loadCheckoutCart().length > 0;
 
@@ -476,16 +493,17 @@
 
             if (!hasItems) {
                 paySummary.className = "pending flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm text-slate-400 mb-5 transition-all";
-                paySummaryText.innerHTML = '<i class="fas fa-info-circle"></i> Your cart is empty — add items to pay the delivery fee';
+                paySummaryText.innerHTML = '<i class="fas fa-info-circle"></i> Your cart is empty — add items to pay the deposit';
             } else if (!formReady) {
                 paySummary.className = "pending flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-slate-200 bg-slate-50/80 px-4 py-3.5 text-sm text-slate-400 mb-5 transition-all";
-                paySummaryText.textContent = "Complete your delivery details to compute fee";
+                paySummaryText.textContent = "Complete your delivery details to compute deposit";
             } else {
                 const methodLabel = selectedPaymentChannel === 'card' ? 'Visa / MasterCard' : 'EcoCash / Mobile Money';
                 paySummary.className = "flex items-center justify-center flex-wrap gap-2 rounded-xl border border-dashed border-red-200 bg-red-50/70 px-4 py-3.5 text-sm text-slate-700 mb-5 transition-all";
                 paySummaryText.innerHTML =
-                    `Pay delivery fee of <span class="font-extrabold text-payred">${fmt(fee)}</span> using ` +
-                    `<span class="inline-flex items-center gap-1 font-semibold text-slate-800">${methodLabel}</span>`;
+                    `Pay deposit of <span class="font-extrabold text-payred">${fmt(deposit)}</span> (10%) using ` +
+                    `<span class="inline-flex items-center gap-1 font-semibold text-slate-800">${methodLabel}</span>` +
+                    ` <span class="text-slate-500">· then 12 × ${fmt(monthly)}/mo</span>`;
             }
 
             if (payBtn.disabled) {
@@ -494,9 +512,9 @@
                     return !el || el.value.trim() === "";
                 }).length;
                 btnFee.textContent = !hasItems ? "Cart is empty" :
-                    (missing > 0 ? "Complete required details to enable" : `Delivery Fee: ${fmt(fee)}`);
+                    (missing > 0 ? "Complete required details to enable" : `Deposit: ${fmt(deposit)}`);
             } else {
-                btnFee.textContent = `Delivery fee to pay: ${fmt(fee)}`;
+                btnFee.textContent = `Deposit to pay: ${fmt(deposit)}`;
             }
         }
 
@@ -514,6 +532,15 @@
         function handlePaymentRedirect() {
             if (payBtn.disabled) return; // safety net
             localStorage.setItem("selectedPaymentMethod", selectedPaymentChannel);
+
+            // Persist the payment plan details for downstream pages
+            localStorage.setItem("paymentPlan", JSON.stringify({
+                deposit: window.__deposit,
+                remaining: window.__remaining,
+                monthly: window.__monthly,
+                months: INSTALLMENT_MONTHS,
+                total: window.__orderTotal
+            }));
 
             if (selectedPaymentChannel === 'ecocash') {
                 window.location.href = "login.html";
