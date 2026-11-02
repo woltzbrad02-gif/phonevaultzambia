@@ -1,1 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHONEVAULT ZIMBABWE - OnePlus Store</title>
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a73e8',
+                        accent: '#27ae60',
+                        dark: '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+         ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 4px;
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        
+        .features .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 0;
+        }
+        
+        .features .box-container .box {
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: left;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            outline: 1px solid rgba(226, 232, 240, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features .box-container .box:hover {
+            outline: 2px solid #27ae60;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px -5px rgba(39, 174, 96, 0.15);
+        }
+        
+        .features .box-container .box .img-wrapper {
+            height: 16rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .features .box-container .box img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        
+        .features .box-container .box:hover img {
+            transform: scale(1.05);
+        }
+        
+        .color-radio {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            transition: all 0.2s ease;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        
+        .color-radio:checked {
+            outline-color: #27ae60;
+            transform: scale(1.1);
+        }
+        
+        .storage-btn {
+            border: 1px solid #cbd5e1;
+            background-color: #f8fafc;
+            color: #475569;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.35rem 0.6rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .storage-btn:hover {
+            border-color: #94a3b8;
+            background-color: #f1f5f9;
+        }
+        
+        .storage-btn.active {
+            background-color: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 font-sans text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 sm:p-8 relative transform scale-95 transition-transform duration-300">
+            <button id="close-login" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-xl">
+                    <i class="fas fa-user-lock"></i>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900">Login to PHONEVAULT</h3>
+                <p class="text-xs text-slate-500 mt-1">Access your saved orders &amp; OnePlus warranty profile</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('Logged in successfully!'); document.getElementById('login-modal').classList.add('opacity-0', 'pointer-events-none');" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Email Address</label>
+                    <input type="email" required placeholder="you@example.com" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                    <input type="password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-lg shadow-md transition text-sm">Login Now</button>
+                <div class="flex items-center justify-between text-xs text-slate-500 pt-1">
+                    <a href="#" class="hover:text-emerald-600 transition">Forget your password?</a>
+                    <a href="#" class="hover:text-emerald-600 transition">Create an account</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header Section Starts -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Logo -->
+            <a href="#home" class="flex items-center gap-3 font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight hover:opacity-90 transition">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-md shadow-emerald-600/30">
+                    <i class="fas fa-mobile-alt text-xl"></i>
+                </div>
+                <span>PHONEVAULT<span class="text-emerald-600"> ZIMBABWE</span></span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-medium text-slate-600 text-sm tracking-wide">
+                <a href="#home" class="hover:text-emerald-600 transition-colors py-1">Home</a>
+                <a href="#features" class="text-emerald-600 font-semibold border-b-2 border-emerald-600 py-1">Features</a>
+                <a href="#features" class="hover:text-emerald-600 transition-colors py-1">Products</a>
+                <a href="#categories" class="hover:text-emerald-600 transition-colors py-1">Categories</a>
+                <a href="#review" class="hover:text-emerald-600 transition-colors py-1">Review</a>
+                <a href="#blogs" class="hover:text-emerald-600 transition-colors py-1">Blogs</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <button id="search-btn" class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Search">
+                    <i class="fas fa-search text-lg"></i>
+                </button>
+
+                <button id="cart-btn" class="relative w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Shopping Cart">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
+                </button>
+
+                <button id="login-btn" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg font-medium text-sm transition shadow-sm">
+                    <i class="fas fa-user"></i>
+                    <span class="hidden sm:inline">Account</span>
+                </button>
+
+                <button id="menu-btn" class="md:hidden w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3">
+            <a href="#home" class="block font-medium text-slate-700 hover:text-emerald-600">Home</a>
+            <a href="#features" class="block font-medium text-emerald-600">Features</a>
+            <a href="#features" class="block font-medium text-slate-700 hover:text-emerald-600">Products</a>
+            <a href="#categories" class="block font-medium text-slate-700 hover:text-emerald-600">Categories</a>
+            <a href="#review" class="block font-medium text-slate-700 hover:text-emerald-600">Review</a>
+            <a href="#blogs" class="block font-medium text-slate-700 hover:text-emerald-600">Blogs</a>
+        </div>
+
+        <!-- Expandable Search Bar -->
+        <div id="search-bar" class="hidden bg-slate-100 border-b border-slate-200 py-3 px-4 sm:px-8 transition-all">
+            <div class="max-w-3xl mx-auto relative flex items-center">
+                <input type="search" id="search-box" placeholder="Search OnePlus models, specs, colors..." class="w-full bg-white pl-11 pr-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                <i class="fas fa-search absolute left-4 text-slate-400"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section Ends -->
+
+    <!-- Shopping Cart Slide-over Panel -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <h3 class="font-bold text-lg text-slate-900 flex items-center gap-2">
+                <i class="fas fa-shopping-bag text-emerald-600"></i> Your Cart Drawer
+            </h3>
+            <button id="close-cart" class="w-8 h-8 rounded-full hover:bg-slate-200 flex items-center justify-center text-slate-500 transition">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
+            <!-- Dynamic Cart Items injected here -->
+        </div>
+
+        <div class="p-5 border-t border-slate-100 bg-slate-50 space-y-4">
+            <div class="flex justify-between items-center font-bold text-lg text-slate-900">
+                <span>Subtotal</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <p class="text-xs text-slate-500">Free priority shipping included within the USA.</p>
+            <button onclick="goToCheckout()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-lg shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+    <span>Proceed to Checkout</span>
+    <i class="fas fa-arrow-right text-xs"></i>
+</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <!-- Home Hero Section Starts -->
+        <section class="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white py-16 sm:py-24 px-6 overflow-hidden" id="home">
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#27ae60_1px,transparent_1px)] [background-size:16px_16px]"></div>
+            <div class="max-w-5xl mx-auto text-center relative z-10 space-y-6">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold uppercase tracking-widest">
+                    Authorized OnePlus Retail Partner - ZIMBABWE
+                </span>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    Never Settle. <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-200">Flagship Speed, Honest Price.</span>
+                </h1>
+                <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                    Brand new and latest OnePlus models with full ZIMBABWE factory warranty, SuperVOOC fast charging, custom storage tiers, and official color variants.
+                </p>
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <a href="#features" class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-emerald-600/30 transition transform hover:-translate-y-0.5">
+                        Shop Now
+                    </a>
+                    <a href="#categories" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-3.5 rounded-xl font-semibold backdrop-blur transition">
+                        Browse Categories
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Home Hero Section Ends -->
+
+        <!-- OnePlus Features Section Starts -->
+        <section class="features py-12" id="features">
+            <div class="max-w-7xl mx-auto">
+
+                <div class="flex flex-col md:flex-row md:items-end justify-between px-[5%] mb-6 pb-4 border-b border-slate-200 gap-4">
+                    <div>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">OnePlus <span class="text-emerald-600">Collection</span></h2>
+                        <p class="text-slate-500 text-sm mt-1">Select storage tiers to view dynamic pricing &amp; pick official colors</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Sort By:</label>
+                        <select id="sort-select" class="bg-white border border-slate-300 text-slate-700 text-sm rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="featured">Featured First</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Sidebar + Grid wrapper -->
+                <div class="flex flex-col lg:flex-row gap-8 px-[5%]">
+
+                    <!-- FILTER SIDEBAR (the "menu sections") -->
+                    <aside class="lg:w-64 shrink-0 space-y-5">
+                        <div class="bg-white rounded-2xl p-5 outline outline-1 outline-slate-200">
+                            <h3 class="font-bold text-slate-900 mb-3 text-sm uppercase tracking-wide flex items-center gap-2">
+                                <i class="fas fa-layer-group text-emerald-600"></i> By Series
+                            </h3>
+                            <div id="series-filters" class="space-y-2 text-sm">
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="OnePlus 15 Series"> OnePlus 15 Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="OnePlus 13 Series"> OnePlus 13 Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="OnePlus 10 Series"> OnePlus 10 Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="OnePlus 9 Series"> OnePlus 9 Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="OnePlus 8 Series"> OnePlus 8 Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="Nord Series"> Nord Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                                <label class="flex items-center justify-between cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <span class="flex items-center">
+                                        <input type="checkbox" class="series-filter mr-2 accent-emerald-600" value="Ace Series"> Ace Series
+                                    </span>
+                                    <span class="series-count text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-5 outline outline-1 outline-slate-200">
+                            <h3 class="font-bold text-slate-900 mb-3 text-sm uppercase tracking-wide flex items-center gap-2">
+                                <i class="fas fa-tags text-emerald-600"></i> By Price
+                            </h3>
+                            <div id="price-filters" class="space-y-2 text-sm">
+                                <label class="flex items-center cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <input type="checkbox" class="price-filter mr-2 accent-emerald-600" value="0-199"> Under $200
+                                </label>
+                                <label class="flex items-center cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <input type="checkbox" class="price-filter mr-2 accent-emerald-600" value="200-399"> $200 &ndash; $399
+                                </label>
+                                <label class="flex items-center cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <input type="checkbox" class="price-filter mr-2 accent-emerald-600" value="400-699"> $400 &ndash; $699
+                                </label>
+                                <label class="flex items-center cursor-pointer text-slate-600 hover:text-emerald-600 transition">
+                                    <input type="checkbox" class="price-filter mr-2 accent-emerald-600" value="700-99999"> $700 and above
+                                </label>
+                            </div>
+                        </div>
+
+                        <button id="clear-filters" class="w-full text-sm font-semibold text-emerald-600 hover:text-emerald-700 bg-white border border-emerald-200 hover:border-emerald-400 rounded-lg py-2 transition">
+                            <i class="fas fa-rotate-left mr-1"></i> Clear All Filters
+                        </button>
+                    </aside>
+
+                    <!-- PRODUCT AREA -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-4 text-sm text-slate-500">
+                            <span id="result-count">Showing all products</span>
+                            <span id="active-series-label" class="hidden bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold"></span>
+                        </div>
+
+                        <div id="no-results" class="hidden text-center py-16 text-slate-400 bg-white rounded-2xl outline outline-1 outline-slate-200">
+                            <i class="fas fa-magnifying-glass text-4xl mb-3 opacity-40"></i>
+                            <p class="text-sm">No phones match your filters. Try clearing them.</p>
+                        </div>
+
+                        <div class="box-container" id="product-grid">
+
+                            <!-- 1: Nord 2T -->
+                            <div class="box" data-name="Nord 2T" data-series="Nord Series" data-featureorder="1">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-2t.jpg" alt="Nord 2T" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+2T'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord 2T</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$120</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> MediaTek Dimensity 1300</div>
+                                    <div class="block"><strong>Display:</strong> 6.43" 90Hz FHD+ AMOLED (HDR10+)</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide + 2MP Monochrome</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="120">128GB</button>
+                                        <button class="storage-btn" data-price="150">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Jade Green</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-n2t" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-n2t" value="Jade Green" data-color-name="Jade Green" class="color-radio" style="background-color: #3f6b5e;" checked>
+                                        <input type="radio" name="color-n2t" value="Misty Green" data-color-name="Misty Green" class="color-radio" style="background-color: #a8c3a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 2: Nord CE 2 Lite 5G -->
+                            <div class="box" data-name="Nord CE 2 Lite 5G" data-series="Nord Series" data-featureorder="2">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-ce-2-lite-5g-0.jpg" alt="Nord CE 2 Lite 5G" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+CE+2+Lite'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord CE 2 Lite 5G</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$116</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 695 5G</div>
+                                    <div class="block"><strong>Display:</strong> 6.59" 120Hz FHD+ IPS LCD</div>
+                                    <div class="block"><strong>Camera:</strong> 64MP Main + 2MP Depth + 2MP Macro</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="116">128GB</button>
+                                        <button class="storage-btn" data-price="146">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Storm Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-nce2l" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-nce2l" value="Storm Blue" data-color-name="Storm Blue" class="color-radio" style="background-color: #2c3e60;" checked>
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 3: Nord 2 5G -->
+                            <div class="box" data-name="Nord 2 5G" data-series="Nord Series" data-featureorder="3">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-2-5g-new.jpg" alt="Nord 2 5G" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+2+5G'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord 2 5G</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$107</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> MediaTek Dimensity 1200-AI</div>
+                                    <div class="block"><strong>Display:</strong> 6.43" 90Hz FHD+ Fluid AMOLED (HDR10+)</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide + 2MP Monochrome</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="107">128GB</button>
+                                        <button class="storage-btn" data-price="137">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Northern Blue</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-n2" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-n2" value="Northern Blue" data-color-name="Northern Blue" class="color-radio" style="background-color: #2c3e60;" checked>
+                                        <input type="radio" name="color-n2" value="Misty Green" data-color-name="Misty Green" class="color-radio" style="background-color: #a8c3a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 4: Nord N10 5G -->
+                            <div class="box" data-name="Nord N10 5G" data-series="Nord Series" data-featureorder="4">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-n10-5g-.jpg" alt="Nord N10 5G" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+N10+5G'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord N10 5G</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$81</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 690 5G</div>
+                                    <div class="block"><strong>Display:</strong> 6.49" 90Hz FHD+ IPS LCD</div>
+                                    <div class="block"><strong>Camera:</strong> 64MP Main + 8MP Ultrawide + 2MP Macro + 2MP Monochrome</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="81">128GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Midnight Ice</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-nn10" value="Midnight Ice" data-color-name="Midnight Ice" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-nn10" value="Storm Blue" data-color-name="Storm Blue" class="color-radio" style="background-color: #2c3e60;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 5: OnePlus 9 Pro -->
+                            <div class="box" data-name="OnePlus 9 Pro" data-series="OnePlus 9 Series" data-featureorder="5">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-9-pro-.jpg" alt="OnePlus 9 Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+9+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 9 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$201</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 888 5G</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" 120Hz Smart LTPO Fluid AMOLED (QHD+)</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 50MP Ultrawide + 8MP Telephoto (3.3x) + 2MP Monochrome</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="201">128GB</button>
+                                        <button class="storage-btn" data-price="231">256GB</button>
+                                        <button class="storage-btn" data-price="281">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Morning Mist</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op9" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-op9" value="Morning Mist" data-color-name="Morning Mist" class="color-radio" style="background-color: #a9c6e8;" checked>
+                                        <input type="radio" name="color-op9" value="Forest Green" data-color-name="Forest Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 6: OnePlus 8T -->
+                            <div class="box" data-name="OnePlus 8T" data-series="OnePlus 8 Series" data-featureorder="6">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-8t.jpg" alt="OnePlus 8T" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+8T'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 8T</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$119</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 865 5G</div>
+                                    <div class="block"><strong>Display:</strong> 6.55" 120Hz FHD+ Fluid AMOLED (HDR10+)</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 16MP Ultrawide + 5MP Macro + 2MP Monochrome</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="119">128GB</button>
+                                        <button class="storage-btn" data-price="149">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Aquamarine</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op8t" value="Aquamarine" data-color-name="Aquamarine" class="color-radio" style="background-color: #7fd0c6;" checked>
+                                        <input type="radio" name="color-op8t" value="Lunar Silver" data-color-name="Lunar Silver" class="color-radio" style="background-color: #d6d6d6;">
+                                        <input type="radio" name="color-op8t" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 7: OnePlus 10 Pro -->
+                            <div class="box" data-name="OnePlus 10 Pro" data-series="OnePlus 10 Series" data-featureorder="7">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-10-pro.jpg" alt="OnePlus 10 Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+10+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 10 Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$153</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8 Gen 1</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" 120Hz LTPO2 Fluid AMOLED (QHD+)</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main (OIS) + 50MP Ultrawide + 8MP Telephoto (3.3x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="153">128GB</button>
+                                        <button class="storage-btn" data-price="183">256GB</button>
+                                        <button class="storage-btn" data-price="233">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Volcanic Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op10p" value="Volcanic Black" data-color-name="Volcanic Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-op10p" value="Emerald Forest" data-color-name="Emerald Forest" class="color-radio" style="background-color: #2f6b57;">
+                                        <input type="radio" name="color-op10p" value="Jade Green" data-color-name="Jade Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 8: Ace Pro -->
+                            <div class="box" data-name="Ace Pro" data-series="Ace Series" data-featureorder="8">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-10t-5g.jpg" alt="Ace Pro" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Ace+Pro'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Ace Pro</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$245</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8+ Gen 1</div>
+                                    <div class="block"><strong>Display:</strong> 6.7" 120Hz FHD+ Fluid AMOLED (HDR10+)</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide + 2MP Macro</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="245">256GB</button>
+                                        <button class="storage-btn" data-price="295">512GB</button>
+                                        <button class="storage-btn" data-price="345">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Obsidian Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-acepro" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-acepro" value="Misty Green" data-color-name="Misty Green" class="color-radio" style="background-color: #a8c3a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 9: Nord N300 -->
+                            <div class="box" data-name="Nord N300" data-series="Nord Series" data-featureorder="9">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-n300-5g.jpg" alt="Nord N300" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+N300'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord N300</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$78</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> MediaTek Dimensity 810 5G</div>
+                                    <div class="block"><strong>Display:</strong> 6.56" 90Hz HD+ IPS LCD</div>
+                                    <div class="block"><strong>Camera:</strong> 48MP Main + 2MP Depth</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="78">64GB</button>
+                                        <button class="storage-btn" data-price="98">128GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Midnight Jade</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-nn300" value="Midnight Jade" data-color-name="Midnight Jade" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-nn300" value="Storm Blue" data-color-name="Storm Blue" class="color-radio" style="background-color: #2c3e60;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 10: OnePlus 15 -->
+                            <div class="box" data-name="OnePlus 15" data-series="OnePlus 15 Series" data-featureorder="10">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-15.jpg" alt="OnePlus 15" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+15'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 15</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$600</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8 Elite Gen 5</div>
+                                    <div class="block"><strong>Display:</strong> 6.78" 165Hz 1.5K LTPO AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 50MP Ultrawide + 50MP Telephoto (3.5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="600">256GB</button>
+                                        <button class="storage-btn" data-price="700">512GB</button>
+                                        <button class="storage-btn" data-price="800">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Infinite Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op15" value="Infinite Black" data-color-name="Infinite Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-op15" value="Sand Storm" data-color-name="Sand Storm" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-op15" value="Misty Green" data-color-name="Misty Green" class="color-radio" style="background-color: #a8c3a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 11: OnePlus 15R -->
+                            <div class="box" data-name="OnePlus 15R" data-series="OnePlus 15 Series" data-featureorder="11">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-15r.jpg" alt="OnePlus 15R" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+15R'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 15R</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$700</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8 Gen 5</div>
+                                    <div class="block"><strong>Display:</strong> 6.83" 165Hz 1.5K AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="700">256GB</button>
+                                        <button class="storage-btn" data-price="800">512GB</button>
+                                        <button class="storage-btn" data-price="900">1TB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Charcoal Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op15r" value="Charcoal Black" data-color-name="Charcoal Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-op15r" value="Mint Breeze" data-color-name="Mint Breeze" class="color-radio" style="background-color: #7fd0c6;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 12: OnePlus 15T -->
+                            <div class="box" data-name="OnePlus 15T" data-series="OnePlus 15 Series" data-featureorder="12">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-15t.jpg" alt="OnePlus 15T" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+15T'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 15T</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$600</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8 Elite Gen 5</div>
+                                    <div class="block"><strong>Display:</strong> 6.32" 165Hz 1.5K AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 50MP Telephoto (3.5x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="600">256GB</button>
+                                        <button class="storage-btn" data-price="700">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Black Matte</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op15t" value="Black Matte" data-color-name="Black Matte" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-op15t" value="Icy White" data-color-name="Icy White" class="color-radio" style="background-color: #f5f5f0;">
+                                        <input type="radio" name="color-op15t" value="Jade Green" data-color-name="Jade Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 13: OnePlus 13s -->
+                            <div class="box" data-name="OnePlus 13s" data-series="OnePlus 13 Series" data-featureorder="13">
+                                <div class="img-wrapper">
+                                    <img src="https://i.ebayimg.com/images/g/um8AAeSw8f5qtqzF/s-l1600.webp" alt="OnePlus 13s" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=OnePlus+13s'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">OnePlus 13s</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$511</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8 Elite</div>
+                                    <div class="block"><strong>Display:</strong> 6.32" 120Hz 1.5K LTPO AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 50MP Telephoto (2x)</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="511">256GB</button>
+                                        <button class="storage-btn" data-price="611">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Midnight Ocean</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-op13s" value="Midnight Ocean" data-color-name="Midnight Ocean" class="color-radio" style="background-color: #2c3e60;" checked>
+                                        <input type="radio" name="color-op13s" value="Dawn White" data-color-name="Dawn White" class="color-radio" style="background-color: #f5f5f0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 14: Nord 6 5G -->
+                            <div class="box" data-name="Nord 6 5G" data-series="Nord Series" data-featureorder="14">
+                                <div class="img-wrapper">
+                                    <img src="https://nrbstore.com/uploads/images/202609/img_x500_6ab651f7836683-96099071.webp" alt="Nord 6 5G" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+6+5G'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord 6 5G</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$400</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8s Gen 4</div>
+                                    <div class="block"><strong>Display:</strong> 6.78" 165Hz 1.5K AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="400">256GB</button>
+                                        <button class="storage-btn" data-price="450">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Titanium Gray</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-n6" value="Titanium Gray" data-color-name="Titanium Gray" class="color-radio" style="background-color: #9a9a97;" checked>
+                                        <input type="radio" name="color-n6" value="Obsidian Black" data-color-name="Obsidian Black" class="color-radio" style="background-color: #1c1c1e;">
+                                        <input type="radio" name="color-n6" value="Misty Green" data-color-name="Misty Green" class="color-radio" style="background-color: #a8c3a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 15: Nord 5 5G -->
+                            <div class="box" data-name="Nord 5 5G" data-series="Nord Series" data-featureorder="15">
+                                <div class="img-wrapper">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjZA3gM3vCeXVdui9H-i6zlwjGyBrqOcnNdFU7EMGAYg&s=10" alt="Nord 5 5G" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+5+5G'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord 5 5G</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$1,200</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8s Gen 3</div>
+                                    <div class="block"><strong>Display:</strong> 6.83" 144Hz 1.5K Swift AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="1200">256GB</button>
+                                        <button class="storage-btn" data-price="1300">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Phantom Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-n5" value="Phantom Black" data-color-name="Phantom Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-n5" value="Sandstone" data-color-name="Sandstone" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-n5" value="Marble Blue" data-color-name="Marble Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 16: Nord CE5 5G -->
+                            <div class="box" data-name="Nord CE5 5G" data-series="Nord Series" data-featureorder="16">
+                                <div class="img-wrapper">
+                                    <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-ce5.jpg" alt="Nord CE5 5G" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Nord+CE5+5G'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Nord CE5 5G</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$80</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> MediaTek Dimensity 8350 Apex</div>
+                                    <div class="block"><strong>Display:</strong> 6.77" 120Hz FHD+ Fluid AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="80">128GB</button>
+                                        <button class="storage-btn" data-price="110">256GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Nebula Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-nce5" value="Nebula Black" data-color-name="Nebula Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-nce5" value="Icy Blue" data-color-name="Icy Blue" class="color-radio" style="background-color: #a9c6e8;">
+                                        <input type="radio" name="color-nce5" value="Misty Green" data-color-name="Misty Green" class="color-radio" style="background-color: #a8c3a0;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                            <!-- 17: Ace 5 -->
+                            <div class="box" data-name="Ace 5" data-series="Ace Series" data-featureorder="17">
+                                <div class="img-wrapper">
+                                    <img src="https://i.ebayimg.com/images/g/b6AAAeSwinJpXbLx/s-l960.webp" alt="Ace 5" onerror="this.onerror=null;this.src='https://placehold.co/400x400/f8fafc/0f172a?text=Ace+5'">
+                                </div>
+                                <div class="flex justify-between items-start mb-1">
+                                    <h3 class="text-xl font-bold text-slate-900">Ace 5</h3>
+                                    <span class="price-badge text-xl font-extrabold text-emerald-600">$320</span>
+                                </div>
+                                <div class="text-xs text-slate-500 space-y-1.5 mb-3">
+                                    <div class="block"><strong>Chip:</strong> Qualcomm Snapdragon 8 Gen 3</div>
+                                    <div class="block"><strong>Display:</strong> 6.78" 120Hz 1.5K LTPO AMOLED</div>
+                                    <div class="block"><strong>Camera:</strong> 50MP Main (OIS) + 8MP Ultrawide + 2MP Macro</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1.5">Storage:</label>
+                                    <div class="flex flex-wrap gap-1.5 storage-group">
+                                        <button class="storage-btn active" data-price="320">256GB</button>
+                                        <button class="storage-btn" data-price="370">512GB</button>
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="text-xs font-semibold text-slate-600">Color:</label>
+                                        <span class="color-label text-xs font-medium text-slate-500">Gravity Black</span>
+                                    </div>
+                                    <div class="flex flex-wrap items-center gap-2">
+                                        <input type="radio" name="color-ace5" value="Gravity Black" data-color-name="Gravity Black" class="color-radio" style="background-color: #1c1c1e;" checked>
+                                        <input type="radio" name="color-ace5" value="Amber Gold" data-color-name="Amber Gold" class="color-radio" style="background-color: #e3cfa4;">
+                                        <input type="radio" name="color-ace5" value="Jade Green" data-color-name="Jade Green" class="color-radio" style="background-color: #3f6b5e;">
+                                    </div>
+                                </div>
+                                <button class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 shadow-sm flex items-center justify-center gap-2 add-cart-btn">
+                                    <i class="fas fa-cart-plus"></i> Add to Cart
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- OnePlus Features Section Ends -->
+
+        <!-- Categories Section Starts -->
+        <section class="py-12 px-[5%] max-w-7xl mx-auto" id="categories">
+            <div class="mb-8 pb-4 border-b border-slate-200">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Product <span class="text-emerald-600">Category</span></h2>
+                <p class="text-slate-500 text-sm mt-1">Shop by brand - up to 25% off launch bundles</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-600 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">ONEPLUS</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 15% off</p>
+                    <a href="#features" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-900 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-mobile-screen-button"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">SAMSUNG</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 15% off</p>
+                    <a href="./samsung.html" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-slate-700 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">IPHONE</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 15% off</p>
+                    <a href="./iphone.html" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 text-center shadow-sm outline outline-1 outline-slate-200 hover:outline-emerald-500 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-16 h-16 mx-auto rounded-2xl bg-teal-600 text-white flex items-center justify-center text-2xl mb-4">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 mb-1">GOOGLE PIXEL</h3>
+                    <p class="text-xs text-emerald-600 font-semibold mb-4">upto 25% off</p>
+                    <a href="./googlepixel.html" class="inline-block w-full bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-lg transition">shop now</a>
+                </div>
+            </div>
+        </section>
+        <!-- Categories Section Ends -->
+
+        <!-- Review Section Starts -->
+        <section class="py-12 px-[5%] max-w-7xl mx-auto" id="review">
+            <div class="mb-8 pb-4 border-b border-slate-200">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Customer's <span class="text-emerald-600">Review</span></h2>
+                <p class="text-slate-500 text-sm mt-1">Verified buyers from across the United States</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold mb-4">JH</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">One of the best sites out there. Prices are high but overall it has quality products, and the OnePlus stock is always genuine.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">James Hunt</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold mb-4">LM</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">Product quality is good and my package was delivered earlier than expected. Sealed box and the SuperVOOC charger was included.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">Lucas Morris</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold mb-4">WW</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">I really love this site! The prices are reasonable, the products are great quality, and the overall shopping experience is smooth and convenient. Everything is well organized and I would definitely recommend it.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">Wyatt Whitney</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl p-6 shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-lg transition">
+                    <div class="w-12 h-12 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold mb-4">VR</div>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">This site is good on a first-come-first-serve basis. I grabbed the new OnePlus on launch day with zero hassle.</p>
+                    <h3 class="font-bold text-slate-900 text-sm">Vance Rogers</h3>
+                    <div class="flex gap-1 text-emerald-500 text-xs mt-2">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Review Section Ends -->
+
+        <!-- Blogs Section Starts -->
+        <section class="py-12 px-[5%] max-w-7xl mx-auto" id="blogs">
+            <div class="mb-8 pb-4 border-b border-slate-200">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Our <span class="text-emerald-600">Blogs</span></h2>
+                <p class="text-slate-500 text-sm mt-1">Buying guides, launch coverage and trade-in tips</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center overflow-hidden">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-15.jpg" alt="Everything You Need is Here" class="w-full h-full object-contain p-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8fafc/0f172a?text=Blog+1'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                            <span><i class="fas fa-user mr-1"></i> by User</span>
+                            <span><i class="fas fa-calendar mr-1"></i> 1st May, 2026</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Everything You Need is Here</h3>
+                        <p class="text-sm text-slate-600 mb-4">Why I prefer this site? Let me explain it in my blog - from warranty coverage to shipping speed.</p>
+                        <a href="#blogs" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                            read more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center overflow-hidden">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-15r.jpg" alt="Latest Features Smartphone" class="w-full h-full object-contain p-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8fafc/0f172a?text=Blog+2'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                            <span><i class="fas fa-user mr-1"></i> by User</span>
+                            <span><i class="fas fa-calendar mr-1"></i> 1st May, 2026</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Latest Features Smartphone</h3>
+                        <p class="text-sm text-slate-600 mb-4">I am a tech-holic. This site provides the latest updates absolutely fast, straight from the launch events.</p>
+                        <a href="#blogs" class="gap-2 bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                            read more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm outline outline-1 outline-slate-200 hover:-translate-y-1 hover:shadow-xl transition">
+                    <div class="h-48 bg-slate-100 flex items-center justify-center overflow-hidden">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/oneplus-nord-ce5.jpg" alt="Latest And Best Products" class="w-full h-full object-contain p-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f8fafc/0f172a?text=Blog+3'">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs text-slate-500 mb-3">
+                            <span><i class="fas fa-user mr-1"></i> by User</span>
+                            <span><i class="fas fa-calendar mr-1"></i> 1st May, 2026</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Latest And Best Products</h3>
+                        <p class="text-sm text-slate-600 mb-4">What do you want from a mobile website? Flagship smartphones, of course. Here's our top OnePlus picks this quarter.</p>
+                        <a href="#blogs" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">
+                            read more <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!-- Blogs Section Ends -->
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900 text-slate-400 border-t border-slate-800 mt-16 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h4 class="text-white font-bold text-lg mb-3">PHONEVAULT ZIMBABWE <i class="fas fa-shopping-cart text-emerald-500 text-sm"></i></h4>
+                <p class="text-sm text-slate-400">Official trusted marketplace for flagship OnePlus smartphones, custom storage configurations, and official color variants. Thank you for exploring our website.</p>
+                <div class="flex justify-center sm:justify-start gap-3 mt-4">
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-3">Quick Links</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#home" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>home</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>features</a></li>
+                    <li><a href="#features" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>products</a></li>
+                    <li><a href="#categories" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>categories</a></li>
+                    <li><a href="#review" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>review</a></li>
+                    <li><a href="#blogs" class="hover:text-emerald-400 transition"><i class="fas fa-arrow-right text-xs mr-2"></i>blogs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-lg mb-3">Newsletter</h4>
+                <p class="text-sm text-slate-400 mb-3">Subscribe for latest updates</p>
+                <div class="flex items-center gap-2">
+                    <input type="email" placeholder="your email" class="bg-slate-800 text-white text-sm px-3 py-2 rounded-lg border border-slate-700 focus:outline-none focus:border-emerald-500 w-full">
+                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition">Subscribe</button>
+                </div>
+                <div class="flex items-center gap-3 mt-5 text-2xl text-slate-500">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-slate-800 text-xs text-center text-slate-500">
+            &copy; 2026 PHONEVAULT ZIMBABWE. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cart State (global so checkout handler can access it)
+            window.cart = [];
+            const cart = window.cart;
+
+            // DOM Elements
+            const cartBtn = document.getElementById('cart-btn');
+            const cartDrawer = document.getElementById('cart-drawer');
+            const cartOverlay = document.getElementById('cart-drawer-overlay');
+            const closeCartBtn = document.getElementById('close-cart');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotalPriceEl = document.getElementById('cart-total-price');
+            const cartCountEl = document.getElementById('cart-count');
+
+            const loginBtn = document.getElementById('login-btn');
+            const loginModal = document.getElementById('login-modal');
+            const closeLoginBtn = document.getElementById('close-login');
+
+            const searchBtn = document.getElementById('search-btn');
+            const searchBar = document.getElementById('search-bar');
+            const searchBox = document.getElementById('search-box');
+
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            const productGrid = document.getElementById('product-grid');
+            const sortSelect = document.getElementById('sort-select');
+
+            // Toggle Search Bar
+            searchBtn.addEventListener('click', () => {
+                searchBar.classList.toggle('hidden');
+                if (!searchBar.classList.contains('hidden')) {
+                    searchBox.focus();
+                }
+            });
+
+            // Toggle Mobile Menu
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Toggle Login Modal
+            loginBtn.addEventListener('click', () => {
+                loginModal.classList.remove('opacity-0', 'pointer-events-none');
+            });
+            closeLoginBtn.addEventListener('click', () => {
+                loginModal.classList.add('opacity-0', 'pointer-events-none');
+            });
+
+            // Toggle Cart Drawer Overlay
+            function openCart() {
+                cartDrawer.classList.remove('translate-x-full');
+                cartOverlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+
+            function closeCart() {
+                cartDrawer.classList.add('translate-x-full');
+                cartOverlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+
+            cartBtn.addEventListener('click', openCart);
+            closeCartBtn.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+
+            // === CENTRAL FILTER + SORT ENGINE ===
+            // The waiter combines your requests ("menu section" + "price band"
+            // + "dish name"), then the kitchen decides the serving order.
+            function getAppliedFilters() {
+                const series = Array.from(document.querySelectorAll('.series-filter:checked')).map(cb => cb.value);
+                const prices = Array.from(document.querySelectorAll('.price-filter:checked')).map(cb => cb.value);
+                const query = searchBox.value.trim().toLowerCase();
+                return {
+                    series,
+                    prices,
+                    query
+                };
+            }
+
+            function applyFilters() {
+                const {
+                    series,
+                    prices,
+                    query
+                } = getAppliedFilters();
+                const boxes = productGrid.querySelectorAll('.box');
+                let visibleCount = 0;
+
+                boxes.forEach(box => {
+                    const cardSeries = box.dataset.series || '';
+                    const text = box.innerText.toLowerCase();
+                    const price = parseFloat(box.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, ''));
+
+                    // Condition 1: search ("order by dish name")
+                    const matchesSearch = !query || text.includes(query);
+
+                    // Condition 2: series ("menu section")
+                    const matchesSeries = series.length === 0 || series.includes(cardSeries);
+
+                    // Condition 3: price band ("appetizer / main / dessert" pricing)
+                    const matchesPrice = prices.length === 0 || prices.some(range => {
+                        const [min, max] = range.split('-').map(Number);
+                        return price >= min && price <= max;
+                    });
+
+                    const show = matchesSearch && matchesSeries && matchesPrice;
+                    box.style.display = show ? 'flex' : 'none';
+                    if (show) visibleCount++;
+                });
+
+                // UI feedback: result counter + active-section label + empty state
+                const resultCount = document.getElementById('result-count');
+                const activeLabel = document.getElementById('active-series-label');
+                const noResults = document.getElementById('no-results');
+
+                if (resultCount) resultCount.innerText = `Showing ${visibleCount} of ${boxes.length} products`;
+                if (activeLabel) {
+                    if (series.length === 1) {
+                        activeLabel.textContent = series[0];
+                        activeLabel.classList.remove('hidden');
+                    } else if (series.length > 1) {
+                        activeLabel.textContent = `${series.length} series selected`;
+                        activeLabel.classList.remove('hidden');
+                    } else {
+                        activeLabel.classList.add('hidden');
+                    }
+                }
+                if (noResults) noResults.classList.toggle('hidden', visibleCount > 0);
+            }
+
+            // Hook up filter checkboxes + search
+            document.querySelectorAll('.series-filter, .price-filter').forEach(cb => {
+                cb.addEventListener('change', applyFilters);
+            });
+            searchBox.addEventListener('input', applyFilters);
+
+            // Clear All Filters
+            const clearBtn = document.getElementById('clear-filters');
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    document.querySelectorAll('.series-filter, .price-filter').forEach(cb => cb.checked = false);
+                    searchBox.value = '';
+                    applyFilters();
+                });
+            }
+
+            // Populate the count badges ("8 dishes in this section")
+            function updateSeriesCounts() {
+                const counts = {};
+                productGrid.querySelectorAll('.box').forEach(box => {
+                    const s = box.dataset.series || 'Other';
+                    counts[s] = (counts[s] || 0) + 1;
+                });
+                document.querySelectorAll('#series-filters .series-filter').forEach(cb => {
+                    const badge = cb.closest('label').querySelector('.series-count');
+                    if (badge) badge.innerText = counts[cb.value] || 0;
+                });
+            }
+            updateSeriesCounts();
+
+            // === SORTING (the "serving order") ===
+            sortSelect.addEventListener('change', (e) => {
+                const val = e.target.value;
+                const boxes = Array.from(productGrid.querySelectorAll('.box'));
+
+                if (val === 'price-low') {
+                    boxes.sort((a, b) =>
+                        parseFloat(a.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, '')) -
+                        parseFloat(b.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, '')));
+                } else if (val === 'price-high') {
+                    boxes.sort((a, b) =>
+                        parseFloat(b.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, '')) -
+                        parseFloat(a.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, '')));
+                } else if (val === 'name-asc') {
+                    boxes.sort((a, b) =>
+                        a.querySelector('h3').innerText.localeCompare(b.querySelector('h3').innerText));
+                } else if (val === 'featured') {
+                    // Chef's picks: restore the original menu arrangement
+                    boxes.sort((a, b) =>
+                        parseInt(a.dataset.featureorder, 10) - parseInt(b.dataset.featureorder, 10));
+                }
+
+                boxes.forEach(box => productGrid.appendChild(box));
+                applyFilters(); // re-apply filters after rearranging
+            });
+
+            // Setup Storage Selection & Dynamic Price Updates
+            document.querySelectorAll('.box').forEach(box => {
+                const storageBtns = box.querySelectorAll('.storage-btn');
+                const priceBadge = box.querySelector('.price-badge');
+
+                storageBtns.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        storageBtns.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const newPrice = parseInt(btn.dataset.price, 10);
+                        priceBadge.innerText = `$${newPrice.toLocaleString()}`;
+                        applyFilters(); // price changed — re-run filters so price bands stay accurate
+                    });
+                });
+
+                // Color Radio Button Change Handler
+                const colorRadios = box.querySelectorAll('.color-radio');
+                const colorLabel = box.querySelector('.color-label');
+
+                colorRadios.forEach(radio => {
+                    radio.addEventListener('change', () => {
+                        if (radio.checked && colorLabel) {
+                            colorLabel.innerText = radio.dataset.colorName;
+                        }
+                    });
+                });
+            });
+
+            // Add to Cart Handlers
+            document.querySelectorAll('.add-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const box = e.target.closest('.box');
+                    const title = box.querySelector('h3').innerText;
+
+                    // Selected Storage Tier
+                    const activeStorageBtn = box.querySelector('.storage-btn.active');
+                    const storage = activeStorageBtn ? activeStorageBtn.innerText : '128GB';
+                    const price = parseFloat(box.querySelector('.price-badge').innerText.replace(/[^0-9.]/g, ''));
+                    const imgSrc = box.querySelector('img').src;
+
+                    // Selected Radio Color
+                    const checkedColorRadio = box.querySelector('.color-radio:checked');
+                    const selectedColor = checkedColorRadio ? checkedColorRadio.value : 'Black';
+
+                    addToCart(title, storage, price, imgSrc, selectedColor);
+                    showToast(`Added ${title} (${storage}, ${selectedColor}) to cart!`);
+                });
+            });
+
+            function addToCart(title, storage, price, img, color) {
+                const cartItemId = `${title}-${storage}-${color}`;
+                const existingIndex = cart.findIndex(item => item.id === cartItemId);
+
+                if (existingIndex > -1) {
+                    cart[existingIndex].qty += 1;
+                } else {
+                    cart.push({
+                        id: cartItemId,
+                        title: title,
+                        storage: storage,
+                        price: price,
+                        img: img,
+                        color: color,
+                        qty: 1
+                    });
+                }
+
+                updateCartUI();
+            }
+
+            function updateCartUI() {
+                // Update Total Cart Badge Count
+                const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+                cartCountEl.innerText = totalItems;
+
+                // Render Drawer Cart Items
+                if (cart.length === 0) {
+                    cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fas fa-shopping-basket text-4xl mb-3 opacity-40"></i>
+                        <p>Your shopping cart is currently empty.</p>
+                    </div>
+                `;
+                } else {
+                    cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-100 relative">
+                        <img src="${item.img}" alt="${item.title}" class="w-16 h-16 object-contain bg-white rounded p-1 border border-slate-200">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-slate-800 text-sm truncate">${item.title}</h4>
+                            <span class="text-xs text-slate-500 block">${item.storage} • Color: ${item.color}</span>
+                            <span class="text-emerald-600 font-bold text-sm">$${item.price.toLocaleString()}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="changeQty('${item.id.replace(/'/g, "\\'")}', -1)" class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-300">-</button>
+                            <span class="text-xs font-bold text-slate-800">${item.qty}</span>
+                            <button onclick="changeQty('${item.id.replace(/'/g, "\\'")}', 1)" class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 hover:bg-slate-300">+</button>
+                        </div>
+                        <button onclick="removeFromCart('${item.id.replace(/'/g, "\\'")}')" class="text-slate-400 hover:text-red-500 ml-1 p-1 transition" title="Remove">
+                            <i class="fas fa-trash-alt text-xs"></i>
+                        </button>
+                    </div>
+                `).join('');
+                }
+
+                // Subtotal calculation
+                const totalVal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                cartTotalPriceEl.innerText = `$${totalVal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            }
+
+            // Cart Quantity Management Helpers
+            window.changeQty = function(id, delta) {
+                const item = cart.find(i => i.id === id);
+                if (item) {
+                    item.qty += delta;
+                    if (item.qty <= 0) {
+                        removeFromCart(id);
+                    } else {
+                        updateCartUI();
+                    }
+                }
+            };
+
+            window.removeFromCart = function(id) {
+                const index = cart.findIndex(i => i.id === id);
+                if (index > -1) {
+                    cart.splice(index, 1);
+                    updateCartUI();
+                }
+            };
+
+            // Proceed to Checkout — saves cart & redirects to checkout.html
+            window.goToCheckout = function() {
+                if (cart.length === 0) {
+                    showToast('Your cart is empty! Add some items first.');
+                    return;
+                }
+                // Save cart so checkout.html can read it
+                localStorage.setItem('checkoutCart', JSON.stringify(cart));
+                window.location.href = 'checkout.html';
+            };
+
+            // Notification Toast helper
+            function showToast(message) {
+                const toastContainer = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'bg-slate-900 text-white px-4 py-3 rounded-lg shadow-xl text-sm flex items-center gap-3 slide-in border border-slate-800';
+                toast.innerHTML = `<i class="fas fa-check-circle text-emerald-400"></i> <span>${message}</span>`;
+                toastContainer.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 2500);
+            }
+
+            // Close drawers/modal with Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeCart();
+                    loginModal.classList.add('opacity-0', 'pointer-events-none');
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // Initial Cart Render & Initial Filter Pass
+            updateCartUI();
+            applyFilters();
+        });
+    </script>
+</body>
+
+</html>
