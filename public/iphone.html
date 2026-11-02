@@ -5,17 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHONEVAULT ZIMBABWE - iPhone Store</title>
+    <title>PHONEVAULT ZIMBABWE - Google Pixel Store</title>
 
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,10 +20,10 @@
                     colors: {
                         primary: '#1a73e8',
                         accent: '#27ae60',
-                        dark: '#1e293b',
+                        dark: '#1e293b'
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
                     }
                 }
             }
@@ -144,7 +140,7 @@
             border-color: #0f172a;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        /* Sidebar filter styling */
+        /* ===== Sidebar filter styling (the "menu chapters") ===== */
         
         .filter-group {
             max-height: 22rem;
@@ -205,7 +201,7 @@
                     <i class="fas fa-user-lock"></i>
                 </div>
                 <h3 class="text-xl font-bold text-slate-900">Login to PHONEVAULT</h3>
-                <p class="text-xs text-slate-500 mt-1">Access your saved orders &amp; Apple Care profile</p>
+                <p class="text-xs text-slate-500 mt-1">Access your saved orders &amp; Pixel warranty profile</p>
             </div>
             <form onsubmit="event.preventDefault(); alert('Logged in successfully!'); document.getElementById('login-modal').classList.add('opacity-0', 'pointer-events-none');" class="space-y-4">
                 <div>
@@ -228,16 +224,13 @@
     <!-- Header Section Starts -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
-
-            <!-- Logo -->
             <a href="#home" class="flex items-center gap-3 font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight hover:opacity-90 transition">
                 <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white shadow-md shadow-emerald-600/30">
                     <i class="fas fa-mobile-alt text-xl"></i>
                 </div>
-                <span>PHONEVAULT<span class="text-emerald-600">ZIMBABWE</span></span>
+                <span>PHONEVAULT<span class="text-emerald-600"> ZIMBABWE</span></span>
             </a>
 
-            <!-- Desktop Navigation Links -->
             <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-medium text-slate-600 text-sm tracking-wide">
                 <a href="#home" class="hover:text-emerald-600 transition-colors py-1">Home</a>
                 <a href="#features" class="text-emerald-600 font-semibold border-b-2 border-emerald-600 py-1">Features</a>
@@ -247,29 +240,24 @@
                 <a href="#blogs" class="hover:text-emerald-600 transition-colors py-1">Blogs</a>
             </nav>
 
-            <!-- Action Controls -->
             <div class="flex items-center gap-3 sm:gap-4">
                 <button id="search-btn" class="w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Search">
                     <i class="fas fa-search text-lg"></i>
                 </button>
-
                 <button id="cart-btn" class="relative w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700 transition" title="Shopping Cart">
                     <i class="fas fa-shopping-cart text-lg"></i>
                     <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-sm">0</span>
                 </button>
-
                 <button id="login-btn" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2 rounded-lg font-medium text-sm transition shadow-sm">
                     <i class="fas fa-user"></i>
                     <span class="hidden sm:inline">Account</span>
                 </button>
-
                 <button id="menu-btn" class="md:hidden w-10 h-10 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-700">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3">
             <a href="#home" class="block font-medium text-slate-700 hover:text-emerald-600">Home</a>
             <a href="#features" class="block font-medium text-emerald-600">Features</a>
@@ -279,15 +267,13 @@
             <a href="#blogs" class="block font-medium text-slate-700 hover:text-emerald-600">Blogs</a>
         </div>
 
-        <!-- Expandable Search Bar -->
         <div id="search-bar" class="hidden bg-slate-100 border-b border-slate-200 py-3 px-4 sm:px-8 transition-all">
             <div class="max-w-3xl mx-auto relative flex items-center">
-                <input type="search" id="search-box" placeholder="Search iPhone models, series, specs, colors..." class="w-full bg-white pl-11 pr-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
+                <input type="search" id="search-box" placeholder="Search Pixel models, specs, colors..." class="w-full bg-white pl-11 pr-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm">
                 <i class="fas fa-search absolute left-4 text-slate-400"></i>
             </div>
         </div>
     </header>
-    <!-- Header Section Ends -->
 
     <!-- Shopping Cart Slide-over Panel -->
     <div id="cart-drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
@@ -300,11 +286,7 @@
                 <i class="fas fa-times"></i>
             </button>
         </div>
-
-        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
-            <!-- Dynamic Cart Items injected here -->
-        </div>
-
+        <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4"></div>
         <div class="p-5 border-t border-slate-100 bg-slate-50 space-y-4">
             <div class="flex justify-between items-center font-bold text-lg text-slate-900">
                 <span>Subtotal</span>
